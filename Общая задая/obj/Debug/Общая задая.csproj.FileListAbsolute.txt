@@ -1,0 +1,10 @@
+C:\Users\Mitya\source\repos\Общая задая\Общая задая\bin\Debug\Общая задая.exe.config
+C:\Users\Mitya\source\repos\Общая задая\Общая задая\bin\Debug\Общая задая.exe
+C:\Users\Mitya\source\repos\Общая задая\Общая задая\bin\Debug\Общая задая.pdb
+C:\Users\Mitya\source\repos\Общая задая\Общая задая\obj\Debug\Общая задая.csprojResolveAssemblyReference.cache
+C:\Users\Mitya\source\repos\Общая задая\Общая задая\obj\Debug\Общая_задая.Form1.resources
+C:\Users\Mitya\source\repos\Общая задая\Общая задая\obj\Debug\Общая_задая.Properties.Resources.resources
+C:\Users\Mitya\source\repos\Общая задая\Общая задая\obj\Debug\Общая задая.csproj.GenerateResource.Cache
+C:\Users\Mitya\source\repos\Общая задая\Общая задая\obj\Debug\Общая задая.csproj.CoreCompileInputs.cache
+C:\Users\Mitya\source\repos\Общая задая\Общая задая\obj\Debug\Общая задая.exe
+C:\Users\Mitya\source\repos\Общая задая\Общая задая\obj\Debug\Общая задая.pdb
