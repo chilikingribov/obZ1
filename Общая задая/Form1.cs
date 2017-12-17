@@ -15,6 +15,7 @@ namespace Общая_задая
         public Form1()
         {
             InitializeComponent();
+            
         }
         static int n = 1, T,  q = 1;
         static double B, M1, M2, E, deltat, Alfa;
@@ -251,6 +252,81 @@ namespace Общая_задая
             }
         }
 
+        private void button5_Click(object sender, EventArgs e)
+        {
+            // Считываем с формы требуемые значения
+
+            double Xmin = 1;
+
+            double Xmax = q;
+
+            double Step = 1;
+
+
+
+            // Количество точек графика
+
+            int count = (int)Math.Ceiling((Xmax - Xmin) / Step)
+
+            + 1;
+
+
+
+            // Массив значений X – общий для обоих графиков
+
+            double[] x = new double[count];
+
+
+
+            // Два массива Y – по одному для каждого графика
+
+            double[] y1 = new double[count];
+
+            double[] y2 = new double[count];
+
+
+
+            // Расчитываем точки для графиков функции
+
+            for (int i = 0; i < count; i++)
+
+            {
+
+                // Вычисляем значение X
+
+                x[i] = Xmin + Step * i;
+
+                // Вычисляем значение функций в точке X
+
+                y1[i] = Math.Sin(x[i]);
+
+                y2[i] = Math.Cos(x[i]);
+
+            }
+
+
+
+            // Настраиваем оси графика
+
+            chart1.ChartAreas[0].AxisX.Minimum = Xmin;
+
+            chart1.ChartAreas[0].AxisX.Maximum = Xmax;
+
+
+
+            // Определяем шаг сетки
+
+            chart1.ChartAreas[0].AxisX.MajorGrid.Interval = Step;
+
+
+
+            // Добавляем вычисленные значения в графики
+
+            chart1.Series[0].Points.DataBindXY(x, y1);
+
+            chart1.Series[1].Points.DataBindXY(x, y2);
+        }
+
         private double NextTgtFuncVal(ref double[,,] weigth, ref double [,] x,ref double[]A   )
         {
             double I=0, sl1=0, sl2=0;
@@ -306,33 +382,41 @@ namespace Общая_задая
             return NextTgtFuncVal(ref weigth, ref x, ref A);
         }
 
-        
+
         private void Iteration(ref double[,] p, ref double[,] x, ref double[,] x1,
-    ref double[,,] weigth, ref double[,,] weigth1,
-    ref double[] A, ref double[] gamma, ref double I1)
+        ref double[,,] weigth, ref double[,,] weigth1,
+        ref double[] A, ref double[] gamma, ref double I1)
         {
 
             SetLastValX(ref x, ref x1);
             SetLastValWeigth(ref weigth, ref weigth1);
             double tempI = Step4_7(ref p, ref x, ref x1, ref weigth, ref weigth1, ref A, ref gamma);
+            double ValILoop;
             while (!(Math.Abs(tempI - I1) < E))
             {
+                ValILoop = I1;
                 if (tempI > I1)
                 {
                     Alfa /= 2;
+                    if (Math.Abs(tempI - ValILoop) < (double)E / 10)
+                    {
+                        MessageBox.Show("Cannot reach");
+                        break;
+                    }
+                    ValILoop = tempI;
                     tempI = Step5_7(ref p, ref x, ref x1, ref weigth, ref weigth1, ref A, ref gamma);
                 }
                 else
                 {
-                    textBox7.Text += (Convert.ToString(tempI));
+                    textBox7.Text += (Convert.ToString(tempI)) + ';' + "\n";
                     I1 = tempI;
                     SetLastValX(ref x, ref x1);
                     SetLastValWeigth(ref weigth, ref weigth1);
                     tempI = Step4_7(ref p, ref x, ref x1, ref weigth, ref weigth1, ref A, ref gamma);
-                    
+
                 }
             }
-            textBox7.Text += (Convert.ToString(tempI));
+            textBox7.Text += (Convert.ToString(tempI)) + ';' + "\n";
         }
 
 
@@ -366,13 +450,19 @@ namespace Общая_задая
 
             for (int i = 0; i < n; i++)
             {
-                table.Columns.Add(Convert.ToString(i + 1), typeof(int));
+                table.Columns.Add(Convert.ToString(i + 1), typeof(double));
+                
             }
+
+
             table.Rows.Add("ai");
             table.Rows.Add("Ai");
             table.Rows.Add("Гi");
 
             dataGridView1.DataSource = table;
+            //this.dataGridView1.Columns["1"].DefaultCellStyle.Format = "g";
+            //dataGridView1.Columns('1').DefaultCellStyle.Format = "N2";
+            //dataGridView1.Columns["2"].DefaultCellStyle.Format = "N2";
             dataGridView1.AutoResizeColumns();
 
 
