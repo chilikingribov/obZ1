@@ -15,10 +15,10 @@ namespace Общая_задая
         public Form1()
         {
             InitializeComponent();
-            textBox7.ScrollBars = ScrollBars.Vertical;
+            //textBox7.ScrollBars = ScrollBars.Vertical;
         }
-        static int n = 1, T, q = 1;
-        static double B, M1, M2, E, deltat, Alfa;
+        static int n , T, q ;
+        static double B, M1, M2, E, deltat, Alfa, I0;
         DataTable table;
 
 
@@ -45,32 +45,23 @@ namespace Общая_задая
             double[,] p = new double[q + 1, n];
             double[,] p1 = new double[q + 1, n];
 
-
-
-
-
             InitAi(ref A);
             IntitWeigth(ref weigth);
 
+            double I, I1;
 
-
-
-                double I, I1;
-
-                InitX(ref x);
-                InitGamma(ref gamma);
-                //Iter0(ref weigth, ref x, ref gamma);
-                CalcNewValX(ref weigth, ref x, ref gamma);
-                I = NextTgtFuncVal(ref weigth, ref x, ref A); // возвращает I
-                I1 = I;
-                textBox7.Text = Convert.ToString(I);
-                // вставить инициализацию предыдущих значений
-                //
-                Iteration(ref p, ref x, ref x1, ref weigth, ref weigth1, ref A, ref gamma, ref I1);
+            InitX(ref x);
+            InitGamma(ref gamma);
+            CalcNewValX(ref weigth, ref x, ref gamma);
+            I = NextTgtFuncVal(ref weigth, ref x, ref A); // возвращает I
+            I0 = I;
+            I1 = I;
+ 
+            Iteration(ref p, ref x, ref x1, ref weigth, ref weigth1, ref A, ref gamma, ref I1);
                
-                FileInput(ref x);
+            FileInput(ref x);
 
-                MessageBox.Show("The end is now!");
+            MessageBox.Show("The end is now!");
             
 
 
@@ -429,41 +420,27 @@ namespace Общая_задая
 
             DataTable table = new DataTable();
 
-            table.Columns.Add(" ", typeof(string));
-
-            //for (int i = 0; i < n; i++)
-            //{
-            //    table.Columns.Add("X"+Convert.ToString(i), typeof(double));
-
-            //}
-                string s1 = "";
-                for (int j = 0; j < n; j++)
-                {
-                    s1 += "\tX" + Convert.ToString(j) + "; ";
-                }
-                table.Rows.Add(s1);
-
-     
-           
-                for(int k=0; k<q; k++)
-                {
-                    string s = "";
-                    for (int j=0; j<n-1; j++)
-                    {
-                        s += "\t" + Convert.ToString(x[k, j]+"; ");
-                    }
-                    s += "\t" + Convert.ToString(x[k, n-1]);
-                    table.Rows.Add(s);
-
-                }
-           
 
 
+            for (int i = 0; i < n; i++)
+            {
+                table.Columns.Add("X" + Convert.ToString(i), typeof(double)); // задали шапку 
+            }
+
+            for (int k = 0; k < q; k++) table.Rows.Add(); // добавляем нужное количество строчек
 
             dataGridView3.DataSource = table;
-            //this.dataGridView1.Columns["1"].DefaultCellStyle.Format = "g";
-            //dataGridView1.Columns('1').DefaultCellStyle.Format = "N2";
-            //dataGridView1.Columns["2"].DefaultCellStyle.Format = "N2";
+           
+            for (int k = 0; k < q; k++)
+            {
+
+                for (int j = 0; j <= n - 1; j++)
+                {
+                    dataGridView3.Rows[k].Cells[j].Value=x[k,j];
+                }
+               
+
+            }
             dataGridView3.AutoResizeColumns();
 
         }
@@ -505,11 +482,18 @@ namespace Общая_задая
         ref double[,,] weigth, ref double[,,] weigth1,
         ref double[] A, ref double[] gamma, ref double I1)
         {
-
+            DataTable table = new DataTable();
+            table.Columns.Add("I", typeof(double)); // задали шапку 
+            List<double> listI = new List<double>();
+            listI.Add(I0);
+            
             SetLastValX(ref x, ref x1);
             SetLastValWeigth(ref weigth, ref weigth1);
             double tempI = Step4_7(ref p, ref x, ref x1, ref weigth, ref weigth1, ref A, ref gamma);
+            listI.Add(tempI);
             double ValILoop = I1;
+
+            
             while (!(Math.Abs(tempI - I1) < E))
             {
                 ValILoop = tempI;
@@ -523,6 +507,7 @@ namespace Общая_задая
                     }
                     ValILoop = tempI;
                     tempI = Step5_7(ref p, ref x, ref x1, ref weigth, ref weigth1, ref A, ref gamma);
+                    listI.Add(tempI);
                 }
                 else
                 {
@@ -532,10 +517,23 @@ namespace Общая_задая
                     SetLastValX(ref x, ref x1);
                     SetLastValWeigth(ref weigth, ref weigth1);
                     tempI = Step4_7(ref p, ref x, ref x1, ref weigth, ref weigth1, ref A, ref gamma);
-
+                    listI.Add(tempI);
                 }
             }
-            textBox7.Text += (Convert.ToString(tempI)) + ';' + "\n";
+
+            foreach (var element in listI)
+            {
+                table.Rows.Add(); // добавляем необходимое количество строчек
+            }
+            dataGridView2.DataSource = table;
+            int k = 0; // элемент по счету
+            foreach (var element in listI)
+            {
+                dataGridView2.Rows[k].Cells[0].Value = Convert.ToString(element); // добавляем необходимое количество строчек
+                k++;
+            }
+
+            // textBox7.Text += (Convert.ToString(tempI)) + ';' + "\n";
         }
 
         private void printI(string i)
@@ -627,16 +625,8 @@ namespace Общая_задая
                 table1.Rows.Add(Convert.ToString(i + 1));
             }
 
-
             dataGridView2.DataSource = table;
             dataGridView2.AutoResizeColumns();
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            double[,] x = new double[q + 1, n];
-            FileOutput(ref x);
-           // MessageBox.Show(Convert.ToString(dataGridView2.CurrentRow.Cells[0].Value));
         }
     }
 }
