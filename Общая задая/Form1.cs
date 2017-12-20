@@ -59,8 +59,9 @@ namespace Общая_задая
  
             Iteration(ref p, ref x, ref x1, ref weigth, ref weigth1, ref A, ref gamma, ref I1);
                
-            FileInput(ref x);
-
+            FileInput(ref x, @"MyTestX.txt");
+            FileInput(ref p, @"MyTestP.txt");
+            FileInitArrWeigth(ref weigth);
             MessageBox.Show("The end is now!");
             
 
@@ -69,11 +70,10 @@ namespace Общая_задая
         }
 
 
-        void FileInput (ref double[,] x)
+        void FileInput (ref double[,] x, string path)
         {
             //File.Create("new_file.txt");
             string ch = "";
-            string path = @"MyTest.txt";
             //if (!File.Exists(path))
             //{
                 // Create a file to write to.
@@ -105,14 +105,10 @@ namespace Общая_задая
         }
 
 
-        private void FileOutput(ref double[,] x)
+        private void FileOutput(ref double[,] x, string path)
         {
              // потом можно удалить. Сейчас только для теста
             int k = 0;
-            
-            //File.Create("new_file.txt");
-            string path = @"MyTest.txt";
-
 
             // Open the file to read from.
             using (StreamReader sr = File.OpenText(path))
@@ -327,47 +323,17 @@ namespace Общая_задая
 
             double Step = 1;
 
+            double[] Ox = new double[q];
+            for (int i = 0; i < q; i++)
+                Ox[i] = i + 1;
 
+            //Значения иксов на последней итерации
+            double[,] x = new double[q + 1, n];
+            FileOutput(ref x, @"MyTestX.txt");
 
             // Количество точек графика
 
-            int count = (int)Math.Ceiling((Xmax - Xmin) / Step)
-
-            + 1;
-
-
-
-            // Массив значений X – общий для обоих графиков
-
-            double[] x = new double[count];
-
-
-
-            // Два массива Y – по одному для каждого графика
-
-            double[] y1 = new double[count];
-
-            double[] y2 = new double[count];
-
-
-
-            // Расчитываем точки для графиков функции
-
-            for (int i = 0; i < count; i++)
-
-            {
-
-                // Вычисляем значение X
-
-                x[i] = Xmin + Step * i;
-
-                // Вычисляем значение функций в точке X
-
-                y1[i] = Math.Sin(x[i]);
-
-                y2[i] = Math.Cos(x[i]);
-
-            }
+            int count = (int)Math.Ceiling((Xmax - Xmin) / Step) + 1;
 
 
 
@@ -377,20 +343,193 @@ namespace Общая_задая
 
             chart1.ChartAreas[0].AxisX.Maximum = Xmax;
 
-
+            chart1.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+            chart1.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
 
             // Определяем шаг сетки
 
             chart1.ChartAreas[0].AxisX.MajorGrid.Interval = Step;
 
+            //Очищаем добавленные "графики"
+            chart1.Series.Clear();
 
+            //Добавим серии в график
+            for (int i = 0; i < n; i++)
+            {
+
+                System.Windows.Forms.DataVisualization.Charting.Series series = new System.Windows.Forms.DataVisualization.Charting.Series();
+                series.ChartArea = "ChartArea1";
+                series.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+                series.Legend = "Legend1";
+                series.Name = "X" + Convert.ToString(i);
+                this.chart1.Series.Add(series);
+            }
 
             // Добавляем вычисленные значения в графики
 
-            chart1.Series[0].Points.DataBindXY(x, y1);
-
-            chart1.Series[1].Points.DataBindXY(x, y2);
+            for (int i = 0; i < n; i++)
+            {
+                double[] tempX = new double[q];
+                for (int j = 0; j < q; j++)
+                    tempX[j] = x[j, i];
+                chart1.Series[i].Points.DataBindXY(Ox, tempX);
+            }
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            // Считываем с формы требуемые значения
+
+            double Pmin = 1;
+
+            double Pmax = q;
+
+            double Step = 1;
+
+            double[] Ox = new double[q];
+            for (int i = 0; i < q; i++)
+                Ox[i] = i + 1;
+
+            //Значения иксов на последней итерации
+            double[,] p = new double[q + 1, n];
+            FileOutput(ref p, @"MyTestP.txt");
+
+            // Количество точек графика
+
+            int count = (int)Math.Ceiling((Pmax - Pmin) / Step) + 1;
+
+
+
+            // Настраиваем оси графика
+
+            chart2.ChartAreas[0].AxisX.Minimum = Pmin;
+
+            chart2.ChartAreas[0].AxisX.Maximum = Pmax;
+
+            chart2.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+            chart2.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
+
+            // Определяем шаг сетки
+
+            chart2.ChartAreas[0].AxisX.MajorGrid.Interval = Step;
+
+            //Очищаем добавленные "графики"
+            chart2.Series.Clear();
+
+            //Добавим серии в график
+            for (int i = 0; i < n; i++)
+            {
+
+                System.Windows.Forms.DataVisualization.Charting.Series series = new System.Windows.Forms.DataVisualization.Charting.Series();
+                series.ChartArea = "ChartArea2";
+                series.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+                series.Legend = "Legend2";
+                series.Name = "P" + Convert.ToString(i);
+                this.chart2.Series.Add(series);
+            }
+
+            // Добавляем вычисленные значения в графики
+
+            for (int i = 0; i < n; i++)
+            {
+                double[] tempP = new double[q];
+                for (int j = 0; j < q; j++)
+                    tempP[j] = p[j, i];
+                chart2.Series[i].Points.DataBindXY(Ox, tempP);
+            }
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            double[,,] weigth = new double[q, n, n]; // Текущий
+            FileOutputArrWeigth(ref weigth);
+
+            DataTable table = new DataTable();
+
+
+
+            for (int i = 0; i < n; i++)
+            {
+                table.Columns.Add("Wki" + Convert.ToString(i), typeof(double)); // задали шапку 
+            }
+
+            for (int k = 0; k < q*(n+1); k++) table.Rows.Add(); // добавляем нужное количество строчек
+
+            dataGridView4.DataSource = table;
+
+            for (int k = 0; k < q; k++)
+            {
+                dataGridView4.Rows[k*(n+1)].Cells[0].Value = k;
+                for (int i =0; i<n; i++)
+                {
+                    for (int j = 0; j <= n - 1; j++)
+                    {
+                        dataGridView4.Rows[k*(n+1) + i + 1].Cells[j].Value = weigth[k, i, j];
+                    }
+                }
+                
+
+
+            }
+            dataGridView4.AutoResizeColumns();
+        }
+
+        void FileInitArrWeigth(ref double[,,] weigth)
+        {
+            string path = @"ArrWeigth.txt";
+            using (StreamWriter sw = File.CreateText(path))
+            {
+                for(int k=0; k<q; k++)
+                {
+                    sw.WriteLine(k);
+                    for (int i=0; i<n; i++)
+                    {
+                        for(int j=0; j<n; j++)
+                        {
+                            sw.Write(weigth[k, i, j]+ " ");
+                        }
+                        sw.Write("\n");
+                    }
+                }
+
+
+                    
+                
+            }
+        }
+
+        void FileOutputArrWeigth(ref double [,,] weigth)
+        {
+            
+            string path = @"ArrWeigth.txt";
+            using (StreamReader sr = File.OpenText(path))
+            {
+                int k; string ch;
+                string s = "";
+                while ((s = sr.ReadLine()) != null)
+                {
+                    k = Convert.ToInt32(s);
+                    
+                    for(int i=0; i<n; i++)
+                    {
+                        s = sr.ReadLine();
+                        for (int j=0; j<n; j++)
+                        {
+                            int indexStart = 0;
+                            int indexEnd = s.IndexOf(" ");
+                            ch = s.Substring(indexStart, indexEnd);
+                            weigth[k, i, j] = Convert.ToDouble(ch);
+                            s = s.Remove(0, indexEnd + 1);
+                            
+                        }
+                    }
+
+                    
+                }
+            }
+
+        }
+
 
         private double NextTgtFuncVal(ref double[,,] weigth, ref double [,] x,ref double[]A   )
         {
@@ -416,7 +555,7 @@ namespace Общая_задая
         private void button6_Click(object sender, EventArgs e)
         {
             double[,] x = new double[q + 1, n];
-            FileOutput(ref x);
+            FileOutput(ref x, @"MyTestX.txt");
 
             DataTable table = new DataTable();
 

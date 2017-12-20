@@ -18,3 +18,22 @@ C:\Users\Mitya\source\repos\Zadacha\obZ1\Общая задая\obj\Debug\Общ�
 C:\Users\Mitya\source\repos\Zadacha\obZ1\Общая задая\obj\Debug\Общая задая.csproj.CoreCompileInputs.cache
 C:\Users\Mitya\source\repos\Zadacha\obZ1\Общая задая\obj\Debug\Общая задая.exe
 C:\Users\Mitya\source\repos\Zadacha\obZ1\Общая задая\obj\Debug\Общая задая.pdb
+C:\Users\gRiboN\Documents\5 курс\obZ1(2)\obZ1\Общая задая\bin\Debug\Общая задая.exe.config
+C:\Users\gRiboN\Documents\5 курс\obZ1(2)\obZ1\Общая задая\obj\Debug\Общая задая.exe
+C:\Users\gRiboN\Documents\5 курс\obZ1(2)\obZ1\Общая задая\obj\Debug\Общая задая.pdb
+C:\Users\gRiboN\Documents\5 курс\obZ1(2)\obZ1\Общая задая\bin\Debug\Общая задая.exe
+C:\Users\gRiboN\Documents\5 курс\obZ1(2)\obZ1\Общая задая\bin\Debug\Общая задая.pdb
+C:\Users\gRiboN\Documents\5 курс\obZ1(2)\obZ1\Общая задая\obj\Debug\Общая задая.csprojResolveAssemblyReference.cache
+C:\Users\gRiboN\Documents\5 курс\obZ1(2)\obZ1\Общая задая\obj\Debug\Общая_задая.Form1.resources
+C:\Users\gRiboN\Documents\5 курс\obZ1(2)\obZ1\Общая задая\obj\Debug\Общая_задая.Properties.Resources.resources
+C:\Users\gRiboN\Documents\5 курс\obZ1(2)\obZ1\Общая задая\obj\Debug\Общая задая.csproj.GenerateResource.Cache
+C:\Users\Mitya\Desktop\Новая папка (3)\obZ1(2)\obZ1\Общая задая\obj\Debug\Общая задая.csprojResolveAssemblyReference.cache
+C:\Users\Mitya\Desktop\Новая папка (3)\obZ1(2)\obZ1\Общая задая\obj\Debug\Общая_задая.Form1.resources
+C:\Users\Mitya\Desktop\Новая папка (3)\obZ1(2)\obZ1\Общая задая\obj\Debug\Общая_задая.Properties.Resources.resources
+C:\Users\Mitya\Desktop\Новая папка (3)\obZ1(2)\obZ1\Общая задая\obj\Debug\Общая задая.csproj.GenerateResource.Cache
+C:\Users\Mitya\Desktop\Новая папка (3)\obZ1(2)\obZ1\Общая задая\obj\Debug\Общая задая.csproj.CoreCompileInputs.cache
+C:\Users\Mitya\Desktop\Новая папка (3)\obZ1(2)\obZ1\Общая задая\obj\Debug\Общая задая.exe
+C:\Users\Mitya\Desktop\Новая папка (3)\obZ1(2)\obZ1\Общая задая\obj\Debug\Общая задая.pdb
+C:\Users\Mitya\Desktop\Новая папка (3)\obZ1(2)\obZ1\Общая задая\bin\Debug\Общая задая.exe.config
+C:\Users\Mitya\Desktop\Новая папка (3)\obZ1(2)\obZ1\Общая задая\bin\Debug\Общая задая.exe
+C:\Users\Mitya\Desktop\Новая папка (3)\obZ1(2)\obZ1\Общая задая\bin\Debug\Общая задая.pdb
