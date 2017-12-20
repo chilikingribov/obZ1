@@ -30,12 +30,12 @@ namespace Общая_задая
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -66,15 +66,15 @@ namespace Общая_задая
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.button6 = new System.Windows.Forms.Button();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.button2 = new System.Windows.Forms.Button();
+            this.dataGridView4 = new System.Windows.Forms.DataGridView();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.button5 = new System.Windows.Forms.Button();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.button3 = new System.Windows.Forms.Button();
             this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.dataGridView4 = new System.Windows.Forms.DataGridView();
-            this.button2 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -85,12 +85,12 @@ namespace Общая_задая
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
+            this.tabPage6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.tabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
-            this.tabPage6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -191,6 +191,7 @@ namespace Общая_задая
             this.textBox9.Name = "textBox9";
             this.textBox9.Size = new System.Drawing.Size(523, 29);
             this.textBox9.TabIndex = 17;
+            this.textBox9.Text = "0,001";
             // 
             // label8
             // 
@@ -211,6 +212,7 @@ namespace Общая_задая
             this.textBox8.Name = "textBox8";
             this.textBox8.Size = new System.Drawing.Size(523, 29);
             this.textBox8.TabIndex = 15;
+            this.textBox8.Text = "0,01";
             // 
             // dataGridView2
             // 
@@ -241,6 +243,7 @@ namespace Общая_задая
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(523, 29);
             this.textBox6.TabIndex = 3;
+            this.textBox6.Text = "200";
             // 
             // groupBox1
             // 
@@ -306,6 +309,7 @@ namespace Общая_задая
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(525, 29);
             this.textBox5.TabIndex = 9;
+            this.textBox5.Text = "1000";
             // 
             // label4
             // 
@@ -326,6 +330,7 @@ namespace Общая_задая
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(525, 29);
             this.textBox4.TabIndex = 7;
+            this.textBox4.Text = "10";
             // 
             // label3
             // 
@@ -347,6 +352,7 @@ namespace Общая_задая
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(525, 29);
             this.textBox3.TabIndex = 5;
+            this.textBox3.Text = "5";
             // 
             // label2
             // 
@@ -367,6 +373,7 @@ namespace Общая_задая
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(525, 29);
             this.textBox2.TabIndex = 3;
+            this.textBox2.Text = "5";
             // 
             // label1
             // 
@@ -387,6 +394,7 @@ namespace Общая_задая
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(525, 29);
             this.textBox1.TabIndex = 1;
+            this.textBox1.Text = "3";
             // 
             // button1
             // 
@@ -433,6 +441,39 @@ namespace Общая_задая
             this.dataGridView3.Size = new System.Drawing.Size(1163, 719);
             this.dataGridView3.TabIndex = 12;
             // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.button2);
+            this.tabPage6.Controls.Add(this.dataGridView4);
+            this.tabPage6.Location = new System.Drawing.Point(4, 25);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(1261, 730);
+            this.tabPage6.TabIndex = 5;
+            this.tabPage6.Text = "Веса";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button2.Location = new System.Drawing.Point(1081, 34);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(137, 62);
+            this.button2.TabIndex = 13;
+            this.button2.Text = "Показать";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click_1);
+            // 
+            // dataGridView4
+            // 
+            this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView4.Location = new System.Drawing.Point(6, 5);
+            this.dataGridView4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.dataGridView4.Name = "dataGridView4";
+            this.dataGridView4.RowTemplate.Height = 24;
+            this.dataGridView4.Size = new System.Drawing.Size(1019, 703);
+            this.dataGridView4.TabIndex = 12;
+            // 
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.button5);
@@ -459,18 +500,18 @@ namespace Общая_задая
             // 
             // chart1
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
+            chartArea3.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chart1.Legends.Add(legend3);
             this.chart1.Location = new System.Drawing.Point(3, 5);
             this.chart1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series1.Legend = "Legend1";
-            series1.Name = "X0";
-            this.chart1.Series.Add(series1);
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series3.Legend = "Legend1";
+            series3.Name = "X0";
+            this.chart1.Series.Add(series3);
             this.chart1.Size = new System.Drawing.Size(1117, 714);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
@@ -480,7 +521,7 @@ namespace Общая_задая
             this.tabPage5.Controls.Add(this.button3);
             this.tabPage5.Controls.Add(this.chart2);
             this.tabPage5.Location = new System.Drawing.Point(4, 25);
-            this.tabPage5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage5.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Size = new System.Drawing.Size(1261, 730);
             this.tabPage5.TabIndex = 4;
@@ -490,7 +531,7 @@ namespace Общая_задая
             // button3
             // 
             this.button3.Location = new System.Drawing.Point(1128, 4);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button3.Margin = new System.Windows.Forms.Padding(4);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(127, 81);
             this.button3.TabIndex = 2;
@@ -500,53 +541,21 @@ namespace Общая_задая
             // 
             // chart2
             // 
-            chartArea2.Name = "ChartArea2";
-            this.chart2.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend2";
-            this.chart2.Legends.Add(legend2);
+            chartArea4.Name = "ChartArea2";
+            this.chart2.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend2";
+            this.chart2.Legends.Add(legend4);
             this.chart2.Location = new System.Drawing.Point(3, 5);
-            this.chart2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chart2.Margin = new System.Windows.Forms.Padding(4);
             this.chart2.Name = "chart2";
-            series2.ChartArea = "ChartArea2";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series2.Legend = "Legend2";
-            series2.Name = "P0";
-            this.chart2.Series.Add(series2);
+            series4.ChartArea = "ChartArea2";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series4.Legend = "Legend2";
+            series4.Name = "P0";
+            this.chart2.Series.Add(series4);
             this.chart2.Size = new System.Drawing.Size(1125, 724);
             this.chart2.TabIndex = 0;
             this.chart2.Text = "chart2";
-            // 
-            // tabPage6
-            // 
-            this.tabPage6.Controls.Add(this.button2);
-            this.tabPage6.Controls.Add(this.dataGridView4);
-            this.tabPage6.Location = new System.Drawing.Point(4, 25);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(1261, 730);
-            this.tabPage6.TabIndex = 5;
-            this.tabPage6.Text = "Веса";
-            this.tabPage6.UseVisualStyleBackColor = true;
-            // 
-            // dataGridView4
-            // 
-            this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView4.Location = new System.Drawing.Point(6, 5);
-            this.dataGridView4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.dataGridView4.Name = "dataGridView4";
-            this.dataGridView4.RowTemplate.Height = 24;
-            this.dataGridView4.Size = new System.Drawing.Size(1019, 703);
-            this.dataGridView4.TabIndex = 12;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(1081, 34);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(137, 111);
-            this.button2.TabIndex = 13;
-            this.button2.Text = "кликни меня, я вся чешусь";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click_1);
             // 
             // Form1
             // 
@@ -569,12 +578,12 @@ namespace Общая_задая
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tabPage3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
+            this.tabPage6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
             this.tabPage4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.tabPage5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
-            this.tabPage6.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
             this.ResumeLayout(false);
 
         }

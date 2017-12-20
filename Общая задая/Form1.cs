@@ -200,7 +200,7 @@ namespace Общая_задая
                     sum = 0;
                     for (int j = 0; j < n; j++)
                     {
-                        sum += p[k + 1, j] * weigth1[k, i, j];
+                        sum += p[k + 1, j] * weigth1[k, j, i];
                     }
                     p[k, i] += deltat * sum;
                 }
@@ -635,7 +635,6 @@ namespace Общая_задая
             
             while (!(Math.Abs(tempI - I1) < E))
             {
-                ValILoop = tempI;
                 if (tempI > I1)
                 {
                     Alfa /= 2;
