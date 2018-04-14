@@ -37,3 +37,13 @@ C:\Users\Mitya\Desktop\Новая папка (3)\obZ1(2)\obZ1\Общая зад�
 C:\Users\Mitya\Desktop\Новая папка (3)\obZ1(2)\obZ1\Общая задая\bin\Debug\Общая задая.exe.config
 C:\Users\Mitya\Desktop\Новая папка (3)\obZ1(2)\obZ1\Общая задая\bin\Debug\Общая задая.exe
 C:\Users\Mitya\Desktop\Новая папка (3)\obZ1(2)\obZ1\Общая задая\bin\Debug\Общая задая.pdb
+C:\Users\Mitya\source\repos\Нейронные сети программы\Zadacha\obZ1\Общая задая\bin\Debug\Общая задая.exe.config
+C:\Users\Mitya\source\repos\Нейронные сети программы\Zadacha\obZ1\Общая задая\bin\Debug\Общая задая.exe
+C:\Users\Mitya\source\repos\Нейронные сети программы\Zadacha\obZ1\Общая задая\bin\Debug\Общая задая.pdb
+C:\Users\Mitya\source\repos\Нейронные сети программы\Zadacha\obZ1\Общая задая\obj\Debug\Общая задая.csprojResolveAssemblyReference.cache
+C:\Users\Mitya\source\repos\Нейронные сети программы\Zadacha\obZ1\Общая задая\obj\Debug\Общая_задая.Form1.resources
+C:\Users\Mitya\source\repos\Нейронные сети программы\Zadacha\obZ1\Общая задая\obj\Debug\Общая_задая.Properties.Resources.resources
+C:\Users\Mitya\source\repos\Нейронные сети программы\Zadacha\obZ1\Общая задая\obj\Debug\Общая задая.csproj.GenerateResource.Cache
+C:\Users\Mitya\source\repos\Нейронные сети программы\Zadacha\obZ1\Общая задая\obj\Debug\Общая задая.csproj.CoreCompileInputs.cache
+C:\Users\Mitya\source\repos\Нейронные сети программы\Zadacha\obZ1\Общая задая\obj\Debug\Общая задая.exe
+C:\Users\Mitya\source\repos\Нейронные сети программы\Zadacha\obZ1\Общая задая\obj\Debug\Общая задая.pdb

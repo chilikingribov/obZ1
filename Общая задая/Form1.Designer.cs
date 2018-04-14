@@ -41,6 +41,8 @@ namespace Общая_задая
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.StartControlGrid = new System.Windows.Forms.DataGridView();
             this.label7 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.textBox9 = new System.Windows.Forms.TextBox();
@@ -75,11 +77,16 @@ namespace Общая_задая
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.button3 = new System.Windows.Forms.Button();
             this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.label11 = new System.Windows.Forms.Label();
+            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.textBox10 = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.StartControlGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -145,6 +152,8 @@ namespace Общая_задая
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label10);
+            this.groupBox2.Controls.Add(this.StartControlGrid);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.label9);
             this.groupBox2.Controls.Add(this.textBox9);
@@ -161,6 +170,26 @@ namespace Общая_задая
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Параметры метода";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label10.Location = new System.Drawing.Point(8, 278);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(32, 25);
+            this.label10.TabIndex = 20;
+            this.label10.Text = "U:";
+            // 
+            // StartControlGrid
+            // 
+            this.StartControlGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.StartControlGrid.Location = new System.Drawing.Point(53, 278);
+            this.StartControlGrid.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.StartControlGrid.Name = "StartControlGrid";
+            this.StartControlGrid.RowTemplate.Height = 24;
+            this.StartControlGrid.Size = new System.Drawing.Size(523, 75);
+            this.StartControlGrid.TabIndex = 19;
             // 
             // label7
             // 
@@ -247,6 +276,10 @@ namespace Общая_задая
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label11);
+            this.groupBox1.Controls.Add(this.textBox7);
+            this.groupBox1.Controls.Add(this.label12);
+            this.groupBox1.Controls.Add(this.textBox10);
             this.groupBox1.Controls.Add(this.button4);
             this.groupBox1.Controls.Add(this.dataGridView1);
             this.groupBox1.Controls.Add(this.label5);
@@ -271,7 +304,7 @@ namespace Общая_задая
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(373, 320);
+            this.button4.Location = new System.Drawing.Point(375, 425);
             this.button4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(137, 52);
@@ -283,11 +316,11 @@ namespace Общая_задая
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(11, 425);
+            this.dataGridView1.Location = new System.Drawing.Point(11, 504);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(620, 287);
+            this.dataGridView1.Size = new System.Drawing.Size(620, 208);
             this.dataGridView1.TabIndex = 11;
             // 
             // label5
@@ -296,9 +329,9 @@ namespace Общая_задая
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label5.Location = new System.Drawing.Point(5, 256);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(60, 29);
+            this.label5.Size = new System.Drawing.Size(57, 29);
             this.label5.TabIndex = 10;
-            this.label5.Text = "M2=";
+            this.label5.Text = "R2=";
             // 
             // textBox5
             // 
@@ -317,9 +350,9 @@ namespace Общая_задая
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label4.Location = new System.Drawing.Point(5, 196);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(60, 29);
+            this.label4.Size = new System.Drawing.Size(57, 29);
             this.label4.TabIndex = 8;
-            this.label4.Text = "M1=";
+            this.label4.Text = "R1=";
             // 
             // textBox4
             // 
@@ -338,9 +371,9 @@ namespace Общая_задая
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label3.Location = new System.Drawing.Point(5, 138);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(43, 29);
+            this.label3.Size = new System.Drawing.Size(63, 29);
             this.label3.TabIndex = 6;
-            this.label3.Text = "B=";
+            this.label3.Text = "Bet=";
             this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // textBox3
@@ -398,7 +431,7 @@ namespace Общая_задая
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(53, 320);
+            this.button1.Location = new System.Drawing.Point(77, 425);
             this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(137, 52);
@@ -557,6 +590,48 @@ namespace Общая_задая
             this.chart2.TabIndex = 0;
             this.chart2.Text = "chart2";
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label11.Location = new System.Drawing.Point(5, 371);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(56, 29);
+            this.label11.TabIndex = 16;
+            this.label11.Text = "E2=";
+            // 
+            // textBox7
+            // 
+            this.textBox7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBox7.Location = new System.Drawing.Point(77, 370);
+            this.textBox7.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.textBox7.Multiline = true;
+            this.textBox7.Name = "textBox7";
+            this.textBox7.Size = new System.Drawing.Size(525, 29);
+            this.textBox7.TabIndex = 15;
+            this.textBox7.Text = "1000";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label12.Location = new System.Drawing.Point(5, 311);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(56, 29);
+            this.label12.TabIndex = 14;
+            this.label12.Text = "E1=";
+            // 
+            // textBox10
+            // 
+            this.textBox10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBox10.Location = new System.Drawing.Point(77, 309);
+            this.textBox10.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.textBox10.Multiline = true;
+            this.textBox10.Name = "textBox10";
+            this.textBox10.Size = new System.Drawing.Size(525, 29);
+            this.textBox10.TabIndex = 13;
+            this.textBox10.Text = "10";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -572,6 +647,7 @@ namespace Общая_задая
             this.tabPage2.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.StartControlGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -639,6 +715,12 @@ namespace Общая_задая
         private System.Windows.Forms.TabPage tabPage6;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.DataGridView dataGridView4;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.DataGridView StartControlGrid;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox textBox10;
     }
 }
 

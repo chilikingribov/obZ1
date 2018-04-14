@@ -695,6 +695,7 @@ namespace Общая_задая
                 E = Convert.ToDouble(textBox9.Text);
                 Alfa = Convert.ToDouble(textBox8.Text);
 
+
             }
             catch (Exception exc)
             {
@@ -717,10 +718,10 @@ namespace Общая_задая
             }
 
 
-            table.Rows.Add("ai");
+            table.Rows.Add("Xi(0)");
+            table.Rows.Add("Xi(T)");
             table.Rows.Add("Ai");
-            table.Rows.Add("Гi");
-
+            table.Rows.Add("wi");
             dataGridView1.DataSource = table;
             //this.dataGridView1.Columns["1"].DefaultCellStyle.Format = "g";
             //dataGridView1.Columns('1').DefaultCellStyle.Format = "N2";
@@ -728,18 +729,22 @@ namespace Общая_задая
             dataGridView1.AutoResizeColumns();
 
 
+            // то
+            DataTable table1 = new DataTable();
+
+            table1.Columns.Add(" ", typeof(string));
+
+            for (int i = 0; i < n; i++)
+            {
+                table1.Columns.Add(Convert.ToString(i + 1), typeof(double));
+
+            }
 
 
+            table1.Rows.Add("U^k(0)");
 
-         
-
-
-
-         
-            //for(int i=0; i<n+1; i++) //до n+1, т.к дополнительно введен столбец, в котором написали название ai, Ai, Xi
-            //{
-            //    dataGridView1.Columns[i].Width = 30;
-            //}
+            StartControlGrid.DataSource = table1;
+            StartControlGrid.AutoResizeColumns();
 
         }
 
