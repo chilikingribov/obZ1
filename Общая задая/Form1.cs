@@ -17,8 +17,8 @@ namespace Общая_задая
             InitializeComponent();
             //textBox7.ScrollBars = ScrollBars.Vertical;
         }
-        static int n , T, q ;
-        static double B, M1, M2, E, deltat, Alfa, I0;
+        static int n , T, layers;
+        static double B, M1, M2, E, deltat, Alfa, I0, E1,E2, Bet, R1, R2, q;
         DataTable table;
 
 
@@ -28,12 +28,17 @@ namespace Общая_задая
 
         private void button4_Click(object sender, EventArgs e)
         {
+            /* Новое:*/
 
+            double[,,] u = new double[layers, n, n]; // Текущий
+            double[,,] u1 = new double[layers, n, n]; // Текущий 
 
+            double[] w = new double[n]; // Омега 
 
+            /*-------------------*/
             // Добавлено новое:
             deltat = (double)T / q;
-            double[,,] weigth = new double[q, n, n]; // Текущий
+            double[,,] weigth = new double[q, n, n]; // Текущий   
             double[,,] weigth1 = new double[q, n, n]; // предыдущий
             // Массив X
             double[,] x = new double[q + 1, n];
