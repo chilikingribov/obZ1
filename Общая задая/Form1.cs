@@ -17,46 +17,70 @@ namespace Общая_задая
             InitializeComponent();
             //textBox7.ScrollBars = ScrollBars.Vertical;
         }
-        static int n , T, layers;
-        static double B, M1, M2, E, deltat, Alfa, I0, E1,E2, Bet, R1, R2, q;
+        static int n, T, layers;
+        static double E, deltat, Alfa, I0, E1, E2, Bet, R1, R2, q;
         DataTable table;
 
+        double[,,] u; // Текущий
+        double[,,] u1; // Текущий 
+
+        double[] w; // Омега 
+                    // Массив X
+        double[,] x;
+        double[,] x1;
+
+        double[,] y;
+        double[,] y1;
+
+        double[] A; // массив Ai
+
+        double[,,] g;
+        double[,,] g1;
+
+        double[,] p;
+        double[,] p1;
 
 
 
 
 
-        private void button4_Click(object sender, EventArgs e)
+        private void button4_Click(object sender, EventArgs e) // Для инициализации
         {
             /* Новое:*/
 
-            double[,,] u = new double[layers, n, n]; // Текущий
-            double[,,] u1 = new double[layers, n, n]; // Текущий 
+            u = new double[layers, n, n]; // Текущий
+            u1 = new double[layers, n, n]; // Текущий 
 
-            double[] w = new double[n]; // Омега 
+            w = new double[n]; // Омега 
 
             /*-------------------*/
             // Добавлено новое:
-            deltat = (double)T / q;
-            double[,,] weigth = new double[layers, n, n]; // Текущий   
-            double[,,] weigth1 = new double[layers, n, n]; // предыдущий
+            deltat = (double)T / layers;
             // Массив X
-            double[,] x = new double[layers + 1, n];
-            double[,] x1 = new double[layers + 1, n];
-            double[] A = new double[n]; // массив Ai
-            double[] gamma = new double[n];
+            x = new double[layers + 1, n];
+            x1 = new double[layers + 1, n];
 
+            y = new double[layers + 1, n];
+            y1 = new double[layers + 1, n];
 
-            double[,] p = new double[layers + 1, n];
-            double[,] p1 = new double[layers + 1, n];
+            A = new double[n]; // массив Ai
+
+            g = new double[layers, n, n];
+            g1 = new double[layers, n, n];
+
+            p = new double[layers + 1, n];
+            p1 = new double[layers + 1, n];
+
 
             InitAi(ref A);
-            IntitWeigth(ref weigth);
+            InitControls(ref u); // инициализация u
 
             double I, I1;
 
-            InitX(ref x);
-            InitGamma(ref gamma);
+            InitX(ref x); // +
+            InitOmega(ref w); //
+
+
             CalcNewValX(ref weigth, ref x, ref gamma);
             I = NextTgtFuncVal(ref weigth, ref x, ref A); // возвращает I
             I0 = I;
@@ -147,6 +171,13 @@ namespace Общая_задая
 
 
 
+        private void InitY(ref double[,] y_)
+        {
+            for (int i = 0; i < n; i++)
+            {
+                y_[0, i] = 1;
+            }
+        }
 
 
 
@@ -156,9 +187,8 @@ namespace Общая_задая
 
 
 
-
- ///Перед итерацией устанавливаем значения на предыдущей итерации
-//Будет вызываться перед началом очередной итерации(кроме нулевой)
+        ///Перед итерацией устанавливаем значения на предыдущей итерации
+        //Будет вызываться перед началом очередной итерации(кроме нулевой)
         private void SetLastValX(ref double[,] x, ref double[,] x1) // x1- предыдущее хранит
         {
             for (int k = 0; k < q + 1; k++)  /// ТУТ ПОМЕНЯЛ МЕСТАМИ
@@ -212,65 +242,8 @@ namespace Общая_задая
                   
         }
 
-        private void InitGamma(ref double [] gamma)
-        {
-            // задание Г
-            for (int i = 0; i < n; i++)
-            {
 
-                try
-                {
-                    //MessageBox.Show(Convert.ToString(dataGridView1.Rows[2].Cells[i + 1].Value));
-                    gamma[i] = Convert.ToDouble(dataGridView1.Rows[2].Cells[i + 1].Value);
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Введите Гi в таблицу");
-                    return;
-
-                }
-
-            }
-        }
-        // Считывание с грида Х
-        private void InitX(ref double [,]x)
-        {
-
-                for (int i = 0; i < n; i++)
-                {
-                    try
-                    {
-                    // было dataGridView1.CurrentRow.Cells[i + 1].Value
-                    
-                        x[0, i] = Convert.ToDouble(dataGridView1.Rows[0].Cells[i + 1].Value);  
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("Введите ai в таблицу");
-                        return;
-                    }
-
-                }
-            
-        }
-
-
-        // задаем веса W
-        private void IntitWeigth(ref double [,,]weigth)
-        {
-            for (int k = 0; k < q; k++)
-            {
-                for (int i = 0; i < n; i++)
-                {
-                    for (int j = 0; j < n; j++)
-                    {
-                        weigth[k, i, j] = 1;
-                    }
-                }
-            }
-        }
-
-        private void InitAi(ref double [] A)
+        private void InitAi(ref double[] A_)
         {
             // задание Ai
             for (int i = 0; i < n; i++)
@@ -279,11 +252,72 @@ namespace Общая_задая
                 try
                 {
                     //MessageBox.Show(Convert.ToString(dataGridView1.Rows[1].Cells[i + 1].Value));
-                    A[i] = Convert.ToInt32(dataGridView1.Rows[1].Cells[i + 1].Value);
+                    A_[i] = Convert.ToInt32(dataGridView1.Rows[2].Cells[i + 1].Value);
                 }
                 catch (Exception)
                 {
                     MessageBox.Show("Введите ai в таблицу");
+                    return;
+
+                }
+
+            }
+        }
+        // задаем веса U
+        private void InitControls(ref double[,,] u_)
+        {
+            for (int i = 0; i < n; i++)
+            {
+
+                try
+                {
+                    //MessageBox.Show(Convert.ToString(dataGridView1.Rows[1].Cells[i + 1].Value));
+                    u_[0, 0, i] = Convert.ToInt32(StartControlGrid.Rows[0].Cells[i + 1].Value);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Введите Ui в таблицу");
+                    return;
+
+                }
+            }
+        }
+        // Считывание с грида Х
+        private void InitX(ref double[,] x_)
+        {
+
+            for (int i = 0; i < n; i++)
+            {
+                try
+                {
+                    // было dataGridView1.CurrentRow.Cells[i + 1].Value
+
+                    x_[0, i] = Convert.ToDouble(dataGridView1.Rows[0].Cells[i + 1].Value);
+                    x_[layers - 1, i] = Convert.ToDouble(dataGridView1.Rows[1].Cells[i + 1].Value);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Введите Xi в таблицу");
+                    return;
+                }
+
+            }
+
+        }
+        private void InitOmega(ref double[] w_)
+        {
+            // задание Г
+            for (int i = 0; i < n; i++)
+            {
+
+                try
+                {
+                    //MessageBox.Show(Convert.ToString(dataGridView1.Rows[2].Cells[i + 1].Value));
+                    w_[i] = Convert.ToDouble(dataGridView1.Rows[3].Cells[i + 1].Value);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Введите Wi в таблицу");
                     return;
 
                 }
@@ -702,11 +736,6 @@ namespace Общая_задая
                 R1 = Convert.ToDouble(textBox4.Text);
                 R2 = Convert.ToDouble(textBox5.Text);
                 layers= Convert.ToInt32(textBox11.Text);
-                // Старое удалить :
-                B = Convert.ToDouble(textBox3.Text);
-                M1 = Convert.ToDouble(textBox4.Text);
-                M2 = Convert.ToDouble(textBox5.Text);
-                //
             }
             catch (Exception exc)
             {
@@ -734,9 +763,6 @@ namespace Общая_задая
             table.Rows.Add("Ai");
             table.Rows.Add("wi");
             dataGridView1.DataSource = table;
-            //this.dataGridView1.Columns["1"].DefaultCellStyle.Format = "g";
-            //dataGridView1.Columns('1').DefaultCellStyle.Format = "N2";
-            //dataGridView1.Columns["2"].DefaultCellStyle.Format = "N2";
             dataGridView1.AutoResizeColumns();
 
 
