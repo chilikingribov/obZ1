@@ -38,17 +38,17 @@ namespace Общая_задая
             /*-------------------*/
             // Добавлено новое:
             deltat = (double)T / q;
-            double[,,] weigth = new double[q, n, n]; // Текущий   
-            double[,,] weigth1 = new double[q, n, n]; // предыдущий
+            double[,,] weigth = new double[layers, n, n]; // Текущий   
+            double[,,] weigth1 = new double[layers, n, n]; // предыдущий
             // Массив X
-            double[,] x = new double[q + 1, n];
-            double[,] x1 = new double[q + 1, n];
+            double[,] x = new double[layers + 1, n];
+            double[,] x1 = new double[layers + 1, n];
             double[] A = new double[n]; // массив Ai
             double[] gamma = new double[n];
 
 
-            double[,] p = new double[q + 1, n];
-            double[,] p1 = new double[q + 1, n];
+            double[,] p = new double[layers + 1, n];
+            double[,] p1 = new double[layers + 1, n];
 
             InitAi(ref A);
             IntitWeigth(ref weigth);
@@ -197,9 +197,9 @@ namespace Общая_задая
         {
             double sum=0;
             for (int i = 0; i < n; i++)
-                p[q, i] = -2 * M2 * (x1[q, i] - A[i]);
+                p[layers, i] = -2 * M2 * (x1[layers, i] - A[i]);
           
-            for (int k = q - 1; k >= 1; k--)
+            for (int k = layers - 1; k >= 1; k--)
                 for (int i = 0; i < n; i++) { 
                     p[k, i] = p[k + 1, i] - deltat * gamma[i] * p[k + 1, i];
                     sum = 0;
@@ -328,12 +328,12 @@ namespace Общая_задая
 
             double Step = 1;
 
-            double[] Ox = new double[q];
+            double[] Ox = new double[layers];
             for (int i = 0; i < q; i++)
                 Ox[i] = i + 1;
 
             //Значения иксов на последней итерации
-            double[,] x = new double[q + 1, n];
+            double[,] x = new double[layers + 1, n];
             FileOutput(ref x, @"MyTestX.txt");
 
             // Количество точек графика
@@ -374,7 +374,7 @@ namespace Общая_задая
 
             for (int i = 0; i < n; i++)
             {
-                double[] tempX = new double[q];
+                double[] tempX = new double[layers];
                 for (int j = 0; j < q; j++)
                     tempX[j] = x[j, i];
                 chart1.Series[i].Points.DataBindXY(Ox, tempX);
@@ -391,12 +391,12 @@ namespace Общая_задая
 
             double Step = 1;
 
-            double[] Ox = new double[q];
+            double[] Ox = new double[layers];
             for (int i = 0; i < q; i++)
                 Ox[i] = i + 1;
 
             //Значения иксов на последней итерации
-            double[,] p = new double[q + 1, n];
+            double[,] p = new double[layers + 1, n];
             FileOutput(ref p, @"MyTestP.txt");
 
             // Количество точек графика
@@ -437,7 +437,7 @@ namespace Общая_задая
 
             for (int i = 0; i < n; i++)
             {
-                double[] tempP = new double[q];
+                double[] tempP = new double[layers];
                 for (int j = 0; j < q; j++)
                     tempP[j] = p[j, i];
                 chart2.Series[i].Points.DataBindXY(Ox, tempP);
@@ -446,7 +446,7 @@ namespace Общая_задая
 
         private void button2_Click_1(object sender, EventArgs e)
         {
-            double[,,] weigth = new double[q, n, n]; // Текущий
+            double[,,] weigth = new double[layers, n, n]; // Текущий
             FileOutputArrWeigth(ref weigth);
 
             DataTable table = new DataTable();
@@ -551,7 +551,7 @@ namespace Общая_задая
             }
                 for(int i=0; i < n; i++)
                 {
-                    sl2 += (x[q, i] - A[i]) * (x[q, i] - A[i]);
+                    sl2 += (x[layers, i] - A[i]) * (x[layers, i] - A[i]);
                 }
                 I = M1 * deltat * sl1 + M2 * sl2;
             return I;
@@ -559,7 +559,7 @@ namespace Общая_задая
 
         private void button6_Click(object sender, EventArgs e)
         {
-            double[,] x = new double[q + 1, n];
+            double[,] x = new double[layers + 1, n];
             FileOutput(ref x, @"MyTestX.txt");
 
             DataTable table = new DataTable();
@@ -694,13 +694,19 @@ namespace Общая_задая
                 n = Convert.ToInt32(textBox1.Text);
                 q = Convert.ToInt32(textBox6.Text);
                 T = Convert.ToInt32(textBox2.Text);
+                E = Convert.ToDouble(textBox9.Text);
+                Alfa = Convert.ToDouble(textBox8.Text);
+                E1= Convert.ToDouble(textBox10.Text);
+                E2 = Convert.ToDouble(textBox7.Text);
+                Bet = Convert.ToDouble(textBox3.Text);
+                R1 = Convert.ToDouble(textBox4.Text);
+                R2 = Convert.ToDouble(textBox5.Text);
+                layers= Convert.ToInt32(textBox11.Text);
+                // Старое удалить :
                 B = Convert.ToDouble(textBox3.Text);
                 M1 = Convert.ToDouble(textBox4.Text);
                 M2 = Convert.ToDouble(textBox5.Text);
-                E = Convert.ToDouble(textBox9.Text);
-                Alfa = Convert.ToDouble(textBox8.Text);
-
-
+                //
             }
             catch (Exception exc)
             {
