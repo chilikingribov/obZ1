@@ -81,8 +81,6 @@ namespace Общая_задая
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.button3 = new System.Windows.Forms.Button();
             this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.label13 = new System.Windows.Forms.Label();
-            this.textBox11 = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -154,8 +152,6 @@ namespace Общая_задая
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.label13);
-            this.groupBox2.Controls.Add(this.textBox11);
             this.groupBox2.Controls.Add(this.label10);
             this.groupBox2.Controls.Add(this.StartControlGrid);
             this.groupBox2.Controls.Add(this.label7);
@@ -224,7 +220,7 @@ namespace Общая_задая
             this.textBox9.Name = "textBox9";
             this.textBox9.Size = new System.Drawing.Size(523, 29);
             this.textBox9.TabIndex = 17;
-            this.textBox9.Text = "0,001";
+            this.textBox9.Text = "0,0001";
             // 
             // label8
             // 
@@ -276,7 +272,7 @@ namespace Общая_задая
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(523, 29);
             this.textBox6.TabIndex = 3;
-            this.textBox6.Text = "200";
+            this.textBox6.Text = "100";
             // 
             // groupBox1
             // 
@@ -325,7 +321,7 @@ namespace Общая_задая
             this.textBox7.Name = "textBox7";
             this.textBox7.Size = new System.Drawing.Size(525, 29);
             this.textBox7.TabIndex = 15;
-            this.textBox7.Text = "1000";
+            this.textBox7.Text = "3";
             // 
             // label12
             // 
@@ -346,7 +342,7 @@ namespace Общая_задая
             this.textBox10.Name = "textBox10";
             this.textBox10.Size = new System.Drawing.Size(525, 29);
             this.textBox10.TabIndex = 13;
-            this.textBox10.Text = "10";
+            this.textBox10.Text = "1";
             // 
             // button4
             // 
@@ -388,7 +384,7 @@ namespace Общая_задая
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(525, 29);
             this.textBox5.TabIndex = 9;
-            this.textBox5.Text = "1000";
+            this.textBox5.Text = "100";
             // 
             // label4
             // 
@@ -431,7 +427,7 @@ namespace Общая_задая
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(525, 29);
             this.textBox3.TabIndex = 5;
-            this.textBox3.Text = "5";
+            this.textBox3.Text = "0,00001";
             // 
             // label2
             // 
@@ -636,27 +632,6 @@ namespace Общая_задая
             this.chart2.TabIndex = 0;
             this.chart2.Text = "chart2";
             // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label13.Location = new System.Drawing.Point(7, 165);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(98, 29);
-            this.label13.TabIndex = 22;
-            this.label13.Text = "Layers=";
-            // 
-            // textBox11
-            // 
-            this.textBox11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox11.Location = new System.Drawing.Point(111, 165);
-            this.textBox11.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.textBox11.Multiline = true;
-            this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(465, 29);
-            this.textBox11.TabIndex = 21;
-            this.textBox11.Text = "3";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -746,8 +721,6 @@ namespace Общая_задая
         private System.Windows.Forms.TextBox textBox7;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox textBox10;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox textBox11;
     }
 }
 

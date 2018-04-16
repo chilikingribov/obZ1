@@ -17,12 +17,16 @@ namespace Общая_задая
             InitializeComponent();
             //textBox7.ScrollBars = ScrollBars.Vertical;
         }
-        static int n, T, layers;
-        static double E, deltat, Alfa, I0, E1, E2, Bet, R1, R2, q;
+        //static int n, T, layers;
+        //static double E, deltat, Alfa, I0, E1, E2, Bet, R1, R2, q;
+        //DataTable table;
+
+        static int n, T, q;
+        static double E, deltat, Alfa, I0, E1, E2, Bet, R1, R2;
         DataTable table;
 
-        double[,,] u; // Текущий
-        double[,,] u1; // Текущий 
+        double[] u; // Текущий
+        double[] u1; // Текущий 
 
         double[] w; // Омега 
                     // Массив X
@@ -34,8 +38,8 @@ namespace Общая_задая
 
         double[] A; // массив Ai
 
-        double[,,] g;
-        double[,,] g1;
+        double[,] g;
+        double[,] g1;
 
         double[,] p;
         double[,] p1;
@@ -48,28 +52,28 @@ namespace Общая_задая
         {
             /* Новое:*/
 
-            u = new double[layers, n, n]; // Текущий
-            u1 = new double[layers, n, n]; // Текущий 
+            u = new double[q]; // Текущий
+            u1 = new double[q]; // 
 
             w = new double[n]; // Омега 
 
             /*-------------------*/
             // Добавлено новое:
-            deltat = (double)T / layers;
+            deltat = (double)T / q;
             // Массив X
-            x = new double[layers + 1, n];
-            x1 = new double[layers + 1, n];
+            x = new double[q + 1, n];
+            x1 = new double[q + 1, n];
 
-            y = new double[layers + 1, n];
-            y1 = new double[layers + 1, n];
+            y = new double[q + 1, n];
+            y1 = new double[q + 1, n];
 
             A = new double[n]; // массив Ai
 
-            g = new double[layers, n, n];
-            g1 = new double[layers, n, n];
+            g = new double[q + 1,  n];
+            g1 = new double[q + 1, n];
 
-            p = new double[layers + 1, n];
-            p1 = new double[layers + 1, n];
+            p = new double[q + 1, n];
+            p1 = new double[q + 1, n];
 
 
             InitAi(ref A);
@@ -80,17 +84,17 @@ namespace Общая_задая
             InitX(ref x); // +
             InitOmega(ref w); //
 
-
-            CalcNewValX(ref weigth, ref x, ref gamma);
-            I = NextTgtFuncVal(ref weigth, ref x, ref A); // возвращает I
+            CalcNewValXAndNewValY(ref x, ref y, ref u, ref w);
+            
+            I = NextTgtFuncVal(ref x, ref A, ref u); // возвращает I
             I0 = I;
             I1 = I;
  
-            Iteration(ref p, ref x, ref x1, ref weigth, ref weigth1, ref A, ref gamma, ref I1);
+            Iteration(ref x, ref x1, ref u, ref u1, ref y, ref y1, ref p, ref g, ref A, ref w, ref I1);
                
             FileInput(ref x, @"MyTestX.txt");
             FileInput(ref p, @"MyTestP.txt");
-            FileInitArrWeigth(ref weigth);
+            //FileInitArrWeigth(ref weigth);
             MessageBox.Show("The end is now!");
             
 
@@ -98,6 +102,29 @@ namespace Общая_задая
            
         }
 
+        private void CalcNewValXAndNewValY(ref double[,] x_, ref double[,] y_, ref double[] u_, ref double[] w_)
+        {
+            // k - слой
+            // i, j - нейроны
+            // второй тест
+            double sl3 = 0;
+                        
+            // слагаемое первое и слагаемое второе
+            for (int k = 0; k < q; k++)
+            {
+                for (int i = 0; i < n; i++)
+                {
+                    x_[k + 1, i] = x_[k, i] + deltat* y_[k, i];
+
+                    for(int j=0; j<n; j++)
+                    {
+                        sl3 = y_[k, j] - y_[k, i];
+                    }
+                    sl3 = sl3* E2 * u_[k] / n;
+                    y_[k + 1, i] = y_[k, i] + deltat * (-(w_[i] * w_[i]) * x_[k, i] + E1 * (1 - Bet * (x_[k, i] * x_[k, i]))+sl3);
+                }
+            }
+        }
 
         void FileInput (ref double[,] x, string path)
         {
@@ -189,28 +216,38 @@ namespace Общая_задая
 
         ///Перед итерацией устанавливаем значения на предыдущей итерации
         //Будет вызываться перед началом очередной итерации(кроме нулевой)
-        private void SetLastValX(ref double[,] x, ref double[,] x1) // x1- предыдущее хранит
+        private void SetLastValXAndValY(ref double[,] x_, ref double[,] x1_, ref double[,] y_, ref double[,] y1_) // x1- предыдущее хранит
         {
             for (int k = 0; k < q + 1; k++)  /// ТУТ ПОМЕНЯЛ МЕСТАМИ
                 for (int i = 0; i < n; i++)
-                    x1[k, i] = x[k, i];
+                {
+                    x1_[k, i] = x_[k, i];
+                    y1_[k, i] = y[k, i];
+                }
 
         }
-
-        private void ImproveWeigths(ref double[,,] weigth, ref double[,,] weigth1, ref double[,] p, ref double[,] x1)
+        // Корректировка управления 
+        private void ImproveU(ref double[] u_, ref double[] u1_, ref double[,] g_,  ref double[,] y_ ) // Проверить то ли мы передаем
         {
-            for (int k = 0; k < q; k++)   // ТУТ ПОМЕНЯЛ МЕСТАМИ
+            double sl1=0, sl2=0, sl3=0;
+            for (int k = 0; k < q; k++)
+            {   // ТУТ ПОМЕНЯЛ МЕСТАМИ
+                /// Дописать условие, по которому будет выполняться проверка, 
+                /// нужно ли сохранять предыдущее значение
+                u1_[k] = u_[k];  
                 for (int i = 0; i < n; i++)
-                for (int j = 0; j < n; j++)
+                {
+                    for (int j = 0; j < n; j++)
                     {
-                        weigth[k, i, j] = weigth1[k, i, j];
-                        weigth[k, i, j] -= Alfa * (2 * M1 * deltat * weigth1[k, i, j] - deltat * p[k + 1, i] * x1[k, j]);
-                        if (weigth[k, i, j] > B)
-                            weigth[k, i, j] = B;
-                        else if (weigth[k, i, j] < (-1) * B)
-                            weigth[k, i, j] = (-1) * B;
-
+                        sl3 += y_[k, j] - y_[k, i];
                     }
+                    sl2 += sl3 * g_[k + 1, i];
+
+                }
+                sl2 *= E2 / n;
+                sl1 = R1 * deltat * u_[k] + sl2;
+                u_[k] = u1_[k] - Alfa *sl1;
+            }
         }
 
         private void SetLastValWeigth(ref double[,,] weigth, ref double[,,] weigth1) // x1- предыдущее хранит
@@ -223,25 +260,47 @@ namespace Общая_задая
         }
         
 
-        private void CalcP(ref double [,]p, ref double [,]x1, ref double [,,] weigth1, ref double []A, ref double []gamma)
-        {
-            double sum=0;
-            for (int i = 0; i < n; i++)
-                p[layers, i] = -2 * M2 * (x1[layers, i] - A[i]);
+        //private void CalcP(ref double [,]p, ref double [,]x1, ref double [,,] weigth1, ref double []A, ref double []gamma)
+        //{
+        //    double sum=0;
+        //    for (int i = 0; i < n; i++)
+        //        p[q, i] = -2 * M2 * (x1[q, i] - A[i]);
           
-            for (int k = layers - 1; k >= 1; k--)
-                for (int i = 0; i < n; i++) { 
-                    p[k, i] = p[k + 1, i] - deltat * gamma[i] * p[k + 1, i];
+        //    for (int k = q - 1; k >= 1; k--)
+        //        for (int i = 0; i < n; i++) { 
+        //            p[k, i] = p[k + 1, i] - deltat * gamma[i] * p[k + 1, i];
+        //            sum = 0;
+        //            for (int j = 0; j < n; j++)
+        //            {
+        //                sum += p[k + 1, j] * weigth1[k, j, i];
+        //            }
+        //            p[k, i] += deltat * sum;
+        //        }
+                  
+        //}
+
+        private void CalcPAndG( ref double[,] x_, ref double[] u_, ref double [,] p_, ref double[,] g_, ref double[] A_, ref double[] w_)
+        {
+            double sum = 0;
+            for (int i = 0; i < n; i++)
+            {
+                p_[q, i] = -2 * R2 * (x_[q, i] - A_[i]);   /// Нужно поменять по _
+                g_[q, i] = 0;
+            }
+                
+            for (int k = q - 1; k >= 1; k--)
+                for (int i = 0; i < n; i++)
+                {
+                    p_[k, i] = p_[k + 1, i] - g_[k + 1, i] * deltat * (w_[i] * w_[i] + 2 * E1 * Bet * x_[k, i]); 
                     sum = 0;
                     for (int j = 0; j < n; j++)
                     {
-                        sum += p[k + 1, j] * weigth1[k, j, i];
+                        sum += g_[k + 1, j];
                     }
-                    p[k, i] += deltat * sum;
+                    sum = 1 / n * sum;
+                    g_[k, i] = deltat * p_[k + 1, i] + g_[k + 1, i] - deltat * E2 * u_[k] * (g_[k + 1, i] - sum);
                 }
-                  
         }
-
 
         private void InitAi(ref double[] A_)
         {
@@ -264,7 +323,7 @@ namespace Общая_задая
             }
         }
         // задаем веса U
-        private void InitControls(ref double[,,] u_)
+        private void InitControls(ref double[] u_)
         {
             for (int i = 0; i < n; i++)
             {
@@ -272,7 +331,7 @@ namespace Общая_задая
                 try
                 {
                     //MessageBox.Show(Convert.ToString(dataGridView1.Rows[1].Cells[i + 1].Value));
-                    u_[0, 0, i] = Convert.ToInt32(StartControlGrid.Rows[0].Cells[i + 1].Value);
+                    u_[i] = Convert.ToInt32(StartControlGrid.Rows[0].Cells[i + 1].Value);
                 }
                 catch (Exception)
                 {
@@ -293,7 +352,7 @@ namespace Общая_задая
                     // было dataGridView1.CurrentRow.Cells[i + 1].Value
 
                     x_[0, i] = Convert.ToDouble(dataGridView1.Rows[0].Cells[i + 1].Value);
-                    x_[layers - 1, i] = Convert.ToDouble(dataGridView1.Rows[1].Cells[i + 1].Value);
+                    x_[q - 1, i] = Convert.ToDouble(dataGridView1.Rows[1].Cells[i + 1].Value);
                 }
                 catch (Exception)
                 {
@@ -327,30 +386,32 @@ namespace Общая_задая
 
 
 
-        private void CalcNewValX(ref double[,,] weigth, ref double[,] x, ref double[] gamma) // вычисления на 0 итерации
-        {
-            // k - слой
-            // i, j - нейроны
-            // второй тест
 
-            ///  ИСПРАВЛЯЛ ТУТ:
 
-            // слагаемое первое и слагаемое второе
-            for (int k = 0; k < q; k++)   
-            {
-                double sl2 = 0;
-                for (int i = 0; i < n; i++)
-                {
-                    sl2 = 0;
-                    for (int j = 0; j < n; j++)
-                    {
-                        sl2 = sl2 + weigth[k, i, j] * x[k, j];
-                    }
+        //private void CalcNewValY(ref double[,] y_, ref double[,] x, ref double[,,] u, ref double[] w) // вычисления на 0 итерации
+        //{
+        //    // k - слой
+        //    // i, j - нейроны
+        //    // второй тест
 
-                    x[k + 1, i] = x[k, i] + deltat * (-gamma[i] * x[k, i] + sl2);
-                }
-            }
-        }
+        //    ///  ИСПРАВЛЯЛ ТУТ:
+
+        //    // слагаемое первое и слагаемое второе
+        //    for (int k = 0; k < q; k++)
+        //    {
+        //        double sl2 = 0;
+        //        for (int i = 0; i < n; i++)
+        //        {
+        //            sl2 = 0;
+        //            for (int j = 0; j < n; j++)
+        //            {
+        //                sl2 = sl2 + weigth[k, i, j] * x[k, j];
+        //            }
+
+        //            x[k + 1, i] = x[k, i] + deltat * (-gamma[i] * x[k, i] + sl2);
+        //        }
+        //    }
+        //}
 
         private void button5_Click(object sender, EventArgs e)
         {
@@ -362,12 +423,12 @@ namespace Общая_задая
 
             double Step = 1;
 
-            double[] Ox = new double[layers];
+            double[] Ox = new double[q];
             for (int i = 0; i < q; i++)
                 Ox[i] = i + 1;
 
             //Значения иксов на последней итерации
-            double[,] x = new double[layers + 1, n];
+            double[,] x = new double[q + 1, n];
             FileOutput(ref x, @"MyTestX.txt");
 
             // Количество точек графика
@@ -408,7 +469,7 @@ namespace Общая_задая
 
             for (int i = 0; i < n; i++)
             {
-                double[] tempX = new double[layers];
+                double[] tempX = new double[q];
                 for (int j = 0; j < q; j++)
                     tempX[j] = x[j, i];
                 chart1.Series[i].Points.DataBindXY(Ox, tempX);
@@ -425,12 +486,12 @@ namespace Общая_задая
 
             double Step = 1;
 
-            double[] Ox = new double[layers];
+            double[] Ox = new double[q];
             for (int i = 0; i < q; i++)
                 Ox[i] = i + 1;
 
             //Значения иксов на последней итерации
-            double[,] p = new double[layers + 1, n];
+            double[,] p = new double[q + 1, n];
             FileOutput(ref p, @"MyTestP.txt");
 
             // Количество точек графика
@@ -471,7 +532,7 @@ namespace Общая_задая
 
             for (int i = 0; i < n; i++)
             {
-                double[] tempP = new double[layers];
+                double[] tempP = new double[q];
                 for (int j = 0; j < q; j++)
                     tempP[j] = p[j, i];
                 chart2.Series[i].Points.DataBindXY(Ox, tempP);
@@ -480,7 +541,7 @@ namespace Общая_задая
 
         private void button2_Click_1(object sender, EventArgs e)
         {
-            double[,,] weigth = new double[layers, n, n]; // Текущий
+            double[,,] weigth = new double[q, n, n]; // Текущий
             FileOutputArrWeigth(ref weigth);
 
             DataTable table = new DataTable();
@@ -570,30 +631,28 @@ namespace Общая_задая
         }
 
 
-        private double NextTgtFuncVal(ref double[,,] weigth, ref double [,] x,ref double[]A   )
+        private double NextTgtFuncVal( ref double [,] x_,ref double[]A_, ref double[] u_)
         {
+            ///Условие, при котором нужно сохранять предыдущее значение функции
+
             double I=0, sl1=0, sl2=0;
             for (int k = 0; k < q; k++)
             {
-                for (int i = 0; i < n; i++)
-                {
-                    for (int j = 0; j < n; j++)
-                    {
-                        sl1 += (weigth[k, i, j]) * (weigth[k, i, j]);
-                    }
-                }
+                sl1+= u_[k] * u_[k] / 2;
             }
-                for(int i=0; i < n; i++)
-                {
-                    sl2 += (x[layers, i] - A[i]) * (x[layers, i] - A[i]);
-                }
-                I = M1 * deltat * sl1 + M2 * sl2;
+            sl1 *= R1 * deltat;
+            for (int i=0; i < n; i++)
+            {
+             sl2 += (x_[q, i] - A_[i])* (x_[q, i] - A_[i]);
+            }
+            sl2 *= R2;
+                I = sl1+sl2;
             return I;
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            double[,] x = new double[layers + 1, n];
+            double[,] x = new double[q + 1, n];
             FileOutput(ref x, @"MyTestX.txt");
 
             DataTable table = new DataTable();
@@ -623,51 +682,55 @@ namespace Общая_задая
 
         }
 
-        private double Step4_7(ref double[,] p, ref double[,] x, ref double[,] x1,
-            ref double[,,] weigth, ref double[,,] weigth1, 
-            ref double[] A, ref double[] gamma)
+        private double Step4_7(ref double[,] x_, ref double[,] x1_,
+            ref double[] u_, ref double[] u1_,
+            ref double[,] y_,
+            ref double[,] p_, ref double [,] g_,
+            ref double[] A_, ref double[] w_)
         {
             //4
-            CalcP(ref p, ref x1, ref weigth1, ref A, ref gamma);
+            CalcPAndG(ref x_, ref u_, ref p_, ref g_, ref A_,ref w_); // Add
 
             //5
-            ImproveWeigths(ref weigth, ref weigth1, ref p, ref x1);
+            ImproveU(ref u_, ref u1_, ref g_, ref y_);
 
             //6
-            CalcNewValX(ref weigth, ref x, ref gamma);
+            CalcNewValXAndNewValY(ref x_, ref y_, ref u_, ref w_);
 
             //7
-            return NextTgtFuncVal(ref weigth, ref x, ref A);
+            return NextTgtFuncVal(ref x_, ref A_, ref u_);
         }
 
         
-        private double Step5_7(ref double[,] p, ref double[,] x, ref double[,] x1,
-    ref double[,,] weigth, ref double[,,] weigth1,
-    ref double[] A, ref double[] gamma)
+        private double Step5_7(ref double[,] x_,
+            ref double[] u_, ref double[] u1_,
+            ref double[,] y_,
+            ref double[,] p_, ref double[,] g_,
+            ref double[] A_, ref double[] w_)
         {
-            //5
-            ImproveWeigths(ref weigth, ref weigth1, ref p, ref x1);
+            //4
+            CalcPAndG(ref x_, ref u_, ref p_, ref g_, ref A_, ref w_); // Add
 
-            //6
-            CalcNewValX(ref weigth, ref x, ref gamma);
+            //5
+            ImproveU(ref u_, ref u1_, ref g_, ref y_);
 
             //7
-            return NextTgtFuncVal(ref weigth, ref x, ref A);
+            return NextTgtFuncVal(ref x_, ref A_, ref u_);
         }
 
 
-        private void Iteration(ref double[,] p, ref double[,] x, ref double[,] x1,
-        ref double[,,] weigth, ref double[,,] weigth1,
-        ref double[] A, ref double[] gamma, ref double I1)
+        private void Iteration(ref double[,] x_, ref double[,] x1_, ref double[] u_, ref double[] u1_,
+            ref double[,] y_, ref double[,] y1_, ref double[,] p_, ref double[,] g_,
+            ref double[] A_, ref double[] w_, ref double I1)
         {
             DataTable table = new DataTable();
             table.Columns.Add("I", typeof(double)); // задали шапку 
             List<double> listI = new List<double>();
             listI.Add(I0);
             
-            SetLastValX(ref x, ref x1);
-            SetLastValWeigth(ref weigth, ref weigth1);
-            double tempI = Step4_7(ref p, ref x, ref x1, ref weigth, ref weigth1, ref A, ref gamma);
+            SetLastValXAndValY(ref x, ref x1, ref y, ref y1);
+            SetlastU(ref u,ref u1);
+            double tempI = Step4_7(ref x_, ref x1_, ref u_, ref u1_, ref y_, ref p_, ref g_, ref A_, ref w_);
             listI.Add(tempI);
             double ValILoop = I1;
 
@@ -683,7 +746,7 @@ namespace Общая_задая
                         break;
                     }
                     ValILoop = tempI;
-                    tempI = Step5_7(ref p, ref x, ref x1, ref weigth, ref weigth1, ref A, ref gamma);
+                    tempI = Step5_7(ref x_, ref u_, ref u1_, ref y_, ref p_, ref g_, ref A_, ref w_);
                     listI.Add(tempI);
                 }
                 else
@@ -691,9 +754,9 @@ namespace Общая_задая
                     //printI(Convert.ToString(tempI)); 
                     //MessageBox.Show(Convert.ToString(tempI));
                     I1 = tempI;
-                    SetLastValX(ref x, ref x1);
-                    SetLastValWeigth(ref weigth, ref weigth1);
-                    tempI = Step4_7(ref p, ref x, ref x1, ref weigth, ref weigth1, ref A, ref gamma);
+                    SetLastValXAndValY(ref x_, ref x1_, ref y_, ref y1_);
+                    SetlastU(ref u_, ref u1_);
+                    tempI = Step4_7(ref x_, ref x1_, ref u_, ref u1_, ref y_, ref p_, ref g_, ref A_, ref w_);
                     listI.Add(tempI);
                 }
             }
@@ -711,6 +774,14 @@ namespace Общая_задая
             }
 
             // textBox7.Text += (Convert.ToString(tempI)) + ';' + "\n";
+        }
+
+        private void SetlastU(ref double[] u_, ref double[] u1_)
+        {
+            for(int  i =0; i<q; i++)
+            {
+                u1[i] = u[i];
+            }
         }
 
         private void printI(string i)
@@ -735,7 +806,6 @@ namespace Общая_задая
                 Bet = Convert.ToDouble(textBox3.Text);
                 R1 = Convert.ToDouble(textBox4.Text);
                 R2 = Convert.ToDouble(textBox5.Text);
-                layers= Convert.ToInt32(textBox11.Text);
             }
             catch (Exception exc)
             {
