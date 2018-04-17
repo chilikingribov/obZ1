@@ -36,7 +36,7 @@ namespace Общая_задая
         double[,] y;
         double[,] y1;
 
-        double[] A; // массив Ai
+        double[] A; // массив Ai - желаемые
 
         double[,] g;
         double[,] g1;
@@ -75,10 +75,11 @@ namespace Общая_задая
             p = new double[q + 1, n];
             p1 = new double[q + 1, n];
 
+           
 
             InitAi(ref A);
             InitControls(ref u); // инициализация u
-
+            InitY(ref y);
             double I, I1;
 
             InitX(ref x); // +
@@ -90,7 +91,7 @@ namespace Общая_задая
             I0 = I;
             I1 = I;
  
-            Iteration(ref x, ref x1, ref u, ref u1, ref y, ref y1, ref p, ref g, ref A, ref w, ref I1);
+    //        Iteration(ref x, ref x1, ref u, ref u1, ref y, ref y1, ref p, ref g, ref A, ref w, ref I1);
                
             FileInput(ref x, @"MyTestX.txt");
             FileInput(ref p, @"MyTestP.txt");
@@ -288,7 +289,7 @@ namespace Общая_задая
                 g_[q, i] = 0;
             }
                 
-            for (int k = q - 1; k >= 1; k--)
+            for (int k = q-1; k >= 1; k--)  /// ТТТТТТТТТТТТТТУУУУТ ПРАВИЛ c q-1 на q
                 for (int i = 0; i < n; i++)
                 {
                     p_[k, i] = p_[k + 1, i] - g_[k + 1, i] * deltat * (w_[i] * w_[i] + 2 * E1 * Bet * x_[k, i]); 
@@ -311,7 +312,7 @@ namespace Общая_задая
                 try
                 {
                     //MessageBox.Show(Convert.ToString(dataGridView1.Rows[1].Cells[i + 1].Value));
-                    A_[i] = Convert.ToInt32(dataGridView1.Rows[2].Cells[i + 1].Value);
+                    A_[i] = Convert.ToInt32(dataGridView1.Rows[1].Cells[i + 1].Value);
                 }
                 catch (Exception)
                 {
@@ -352,7 +353,7 @@ namespace Общая_задая
                     // было dataGridView1.CurrentRow.Cells[i + 1].Value
 
                     x_[0, i] = Convert.ToDouble(dataGridView1.Rows[0].Cells[i + 1].Value);
-                    x_[q - 1, i] = Convert.ToDouble(dataGridView1.Rows[1].Cells[i + 1].Value);
+                    //x_[q - 1, i] = Convert.ToDouble(dataGridView1.Rows[1].Cells[i + 1].Value);
                 }
                 catch (Exception)
                 {
@@ -372,7 +373,7 @@ namespace Общая_задая
                 try
                 {
                     //MessageBox.Show(Convert.ToString(dataGridView1.Rows[2].Cells[i + 1].Value));
-                    w_[i] = Convert.ToDouble(dataGridView1.Rows[3].Cells[i + 1].Value);
+                    w_[i] = Convert.ToDouble(dataGridView1.Rows[2].Cells[i + 1].Value);
                 }
                 catch (Exception)
                 {
@@ -728,7 +729,7 @@ namespace Общая_задая
             List<double> listI = new List<double>();
             listI.Add(I0);
             
-            SetLastValXAndValY(ref x, ref x1, ref y, ref y1);
+            //SetLastValXAndValY(ref x, ref x1, ref y, ref y1);
             SetlastU(ref u,ref u1);
             double tempI = Step4_7(ref x_, ref x1_, ref u_, ref u1_, ref y_, ref p_, ref g_, ref A_, ref w_);
             listI.Add(tempI);
@@ -754,7 +755,7 @@ namespace Общая_задая
                     //printI(Convert.ToString(tempI)); 
                     //MessageBox.Show(Convert.ToString(tempI));
                     I1 = tempI;
-                    SetLastValXAndValY(ref x_, ref x1_, ref y_, ref y1_);
+                    //SetLastValXAndValY(ref x_, ref x1_, ref y_, ref y1_);
                     SetlastU(ref u_, ref u1_);
                     tempI = Step4_7(ref x_, ref x1_, ref u_, ref u1_, ref y_, ref p_, ref g_, ref A_, ref w_);
                     listI.Add(tempI);
@@ -829,7 +830,7 @@ namespace Общая_задая
 
 
             table.Rows.Add("Xi(0)");
-            table.Rows.Add("Xi(T)");
+            //table.Rows.Add("Xi(T)");
             table.Rows.Add("Ai");
             table.Rows.Add("wi");
             dataGridView1.DataSource = table;
