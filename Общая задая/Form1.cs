@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Threading;
 namespace Общая_задая
 {
     public partial class Form1 : Form
@@ -20,6 +21,12 @@ namespace Общая_задая
         //static int n, T, layers;
         //static double E, deltat, Alfa, I0, E1, E2, Bet, R1, R2, q;
         //DataTable table;
+
+        public class A
+        {
+            public void d();
+        }
+
 
         static int n, T, q;
         static double E, deltat, Alfa, I0, E1, E2, Bet, R1, R2;
@@ -86,13 +93,14 @@ namespace Общая_задая
             InitOmega(ref w); //
 
             CalcNewValXAndNewValY(ref x, ref y, ref u, ref w);
-            
+
+            //I=Step4_7(ref x, ref x1, ref u, ref u1, ref y, ref p, ref g, ref A, ref w);
             I = NextTgtFuncVal(ref x, ref A, ref u); // возвращает I
             I0 = I;
             I1 = I;
- 
-    //        Iteration(ref x, ref x1, ref u, ref u1, ref y, ref y1, ref p, ref g, ref A, ref w, ref I1);
-               
+
+            Iteration(ref x, ref x1, ref u, ref u1, ref y, ref y1, ref p, ref g, ref A, ref w, ref I1);
+
             FileInput(ref x, @"MyTestX.txt");
             FileInput(ref p, @"MyTestP.txt");
             //FileInitArrWeigth(ref weigth);
@@ -116,12 +124,12 @@ namespace Общая_задая
                 for (int i = 0; i < n; i++)
                 {
                     x_[k + 1, i] = x_[k, i] + deltat* y_[k, i];
-
+                    sl3 = 0;
                     for(int j=0; j<n; j++)
                     {
-                        sl3 = y_[k, j] - y_[k, i];
+                        sl3 += y_[k, j] - y_[k, i];
                     }
-                    sl3 = sl3* E2 * u_[k] / n;
+                    sl3 = (double)sl3 * E2 * (double)u_[k] / n;
                     y_[k + 1, i] = y_[k, i] + deltat * (-(w_[i] * w_[i]) * x_[k, i] + E1 * (1 - Bet * (x_[k, i] * x_[k, i]))+sl3);
                 }
             }
@@ -235,19 +243,21 @@ namespace Общая_задая
             {   // ТУТ ПОМЕНЯЛ МЕСТАМИ
                 /// Дописать условие, по которому будет выполняться проверка, 
                 /// нужно ли сохранять предыдущее значение
-                u1_[k] = u_[k];  
+                sl1 = 0;
+                sl2 = 0;
                 for (int i = 0; i < n; i++)
                 {
+                    sl3 = 0;
                     for (int j = 0; j < n; j++)
                     {
                         sl3 += y_[k, j] - y_[k, i];
                     }
                     sl2 += sl3 * g_[k + 1, i];
-
                 }
-                sl2 *= E2 / n;
-                sl1 = R1 * deltat * u_[k] + sl2;
+                sl2 *= (double) deltat* E2 / n;
+                sl1 = R1 * deltat * u_[k] - sl2;
                 u_[k] = u1_[k] - Alfa *sl1;
+               // u1_[k] = u_[k];
             }
         }
 
@@ -298,7 +308,7 @@ namespace Общая_задая
                     {
                         sum += g_[k + 1, j];
                     }
-                    sum = 1 / n * sum;
+                    sum = (double)1 / n * sum;
                     g_[k, i] = deltat * p_[k + 1, i] + g_[k + 1, i] - deltat * E2 * u_[k] * (g_[k + 1, i] - sum);
                 }
         }
@@ -326,21 +336,25 @@ namespace Общая_задая
         // задаем веса U
         private void InitControls(ref double[] u_)
         {
-            for (int i = 0; i < n; i++)
-            {
 
-                try
+                for (int i = 0; i < q; i++)
                 {
-                    //MessageBox.Show(Convert.ToString(dataGridView1.Rows[1].Cells[i + 1].Value));
-                    u_[i] = Convert.ToInt32(StartControlGrid.Rows[0].Cells[i + 1].Value);
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Введите Ui в таблицу");
-                    return;
 
+                    try
+                    {
+                        //MessageBox.Show(Convert.ToString(dataGridView1.Rows[1].Cells[i + 1].Value));
+                        u_[i] = Convert.ToInt32(StartControlGrid.Rows[0].Cells[1].Value);
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Введите Ui в таблицу");
+                        return;
+
+                    }
                 }
-            }
+
+            
+
         }
         // Считывание с грида Х
         private void InitX(ref double[,] x_)
@@ -542,33 +556,25 @@ namespace Общая_задая
 
         private void button2_Click_1(object sender, EventArgs e)
         {
-            double[,,] weigth = new double[q, n, n]; // Текущий
-            FileOutputArrWeigth(ref weigth);
+
 
             DataTable table = new DataTable();
-
-
-
             for (int i = 0; i < n; i++)
             {
-                table.Columns.Add("Wki" + Convert.ToString(i), typeof(double)); // задали шапку 
+                table.Columns.Add("Y" + Convert.ToString(i), typeof(double)); // задали шапку 
             }
 
-            for (int k = 0; k < q*(n+1); k++) table.Rows.Add(); // добавляем нужное количество строчек
+            for (int k = 0; k < q; k++) table.Rows.Add(); // добавляем нужное количество строчек
 
             dataGridView4.DataSource = table;
 
             for (int k = 0; k < q; k++)
             {
-                dataGridView4.Rows[k*(n+1)].Cells[0].Value = k;
-                for (int i =0; i<n; i++)
+
+                for (int j = 0; j <= n - 1; j++)
                 {
-                    for (int j = 0; j <= n - 1; j++)
-                    {
-                        dataGridView4.Rows[k*(n+1) + i + 1].Cells[j].Value = weigth[k, i, j];
-                    }
+                    dataGridView4.Rows[k].Cells[j].Value = y[k, j];
                 }
-                
 
 
             }
@@ -597,6 +603,26 @@ namespace Общая_задая
                     
                 
             }
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+
+            DataTable table = new DataTable();
+           
+
+            for (int k = 0; k < q; k++) table.Rows.Add(); // добавляем нужное количество строчек
+            dataGridView5.DataSource = table;
+            table.Columns.Add("Номер", typeof(double)); // задали шапку 
+            table.Columns.Add("U" , typeof(double)); // задали шапку
+
+            for (int k = 0; k < q; k++)
+            {
+                dataGridView5.Rows[k].Cells[0].Value = k;
+                dataGridView5.Rows[k].Cells[1].Value = u[k];
+            }
+            dataGridView5.AutoResizeColumns();
+           
         }
 
         void FileOutputArrWeigth(ref double [,,] weigth)
@@ -639,7 +665,7 @@ namespace Общая_задая
             double I=0, sl1=0, sl2=0;
             for (int k = 0; k < q; k++)
             {
-                sl1+= u_[k] * u_[k] / 2;
+                sl1+= (double)u_[k] * (double)u_[k] / 2;
             }
             sl1 *= R1 * deltat;
             for (int i=0; i < n; i++)
@@ -647,7 +673,7 @@ namespace Общая_задая
              sl2 += (x_[q, i] - A_[i])* (x_[q, i] - A_[i]);
             }
             sl2 *= R2;
-                I = sl1+sl2;
+            I = sl1+sl2;
             return I;
         }
 
@@ -703,17 +729,19 @@ namespace Общая_задая
         }
 
         
-        private double Step5_7(ref double[,] x_,
-            ref double[] u_, ref double[] u1_,
-            ref double[,] y_,
+        private double Step5_7(ref double[,] x_, ref double[,] x1_,
+            ref double[] u_, ref double[] u1_, ref double[,] y_,
+            ref double[,] y1_,
             ref double[,] p_, ref double[,] g_,
             ref double[] A_, ref double[] w_)
         {
             //4
-            CalcPAndG(ref x_, ref u_, ref p_, ref g_, ref A_, ref w_); // Add
+           // CalcPAndG(ref x_, ref u_, ref p_, ref g_, ref A_, ref w_); // Add
 
             //5
-            ImproveU(ref u_, ref u1_, ref g_, ref y_);
+            ImproveU(ref u_, ref u1_, ref g_, ref y1_);
+            // 
+            CalcNewValXAndNewValY(ref x_, ref y_, ref u_, ref w_);
 
             //7
             return NextTgtFuncVal(ref x_, ref A_, ref u_);
@@ -729,8 +757,8 @@ namespace Общая_задая
             List<double> listI = new List<double>();
             listI.Add(I0);
             
-            //SetLastValXAndValY(ref x, ref x1, ref y, ref y1);
-            SetlastU(ref u,ref u1);
+            SetLastValXAndValY(ref x_, ref x1_, ref y_, ref y1_);
+            SetlastU(ref u_,ref u1_);
             double tempI = Step4_7(ref x_, ref x1_, ref u_, ref u1_, ref y_, ref p_, ref g_, ref A_, ref w_);
             listI.Add(tempI);
             double ValILoop = I1;
@@ -738,7 +766,13 @@ namespace Общая_задая
             
             while (!(Math.Abs(tempI - I1) < E))
             {
-                if (tempI > I1)
+                table.Rows.Add(tempI); // добавляем необходимое количество строчек
+                 dataGridView2.DataSource = table;
+                 dataGridView2.Show();
+                //textBox3.Text = Convert.ToString(tempI);
+                //MessageBox.Show(Convert.ToString(tempI));
+                //Thread.Sleep(1);
+                if (tempI > I1 || tempI== double.NaN)
                 {
                     Alfa /= 2;
                     if (Math.Abs(tempI - ValILoop) < (double)E / 10)
@@ -747,7 +781,8 @@ namespace Общая_задая
                         break;
                     }
                     ValILoop = tempI;
-                    tempI = Step5_7(ref x_, ref u_, ref u1_, ref y_, ref p_, ref g_, ref A_, ref w_);
+                    tempI = Step5_7(ref x_, ref x1_, ref u_, ref u1_, ref y_, ref y1_, ref p_, ref g_, ref A_, ref w_);
+                   
                     listI.Add(tempI);
                 }
                 else
@@ -755,24 +790,24 @@ namespace Общая_задая
                     //printI(Convert.ToString(tempI)); 
                     //MessageBox.Show(Convert.ToString(tempI));
                     I1 = tempI;
-                    //SetLastValXAndValY(ref x_, ref x1_, ref y_, ref y1_);
+                    SetLastValXAndValY(ref x_, ref x1_, ref y_, ref y1_);
                     SetlastU(ref u_, ref u1_);
                     tempI = Step4_7(ref x_, ref x1_, ref u_, ref u1_, ref y_, ref p_, ref g_, ref A_, ref w_);
                     listI.Add(tempI);
                 }
             }
 
-            foreach (var element in listI)
-            {
-                table.Rows.Add(); // добавляем необходимое количество строчек
-            }
-            dataGridView2.DataSource = table;
-            int k = 0; // элемент по счету
-            foreach (var element in listI)
-            {
-                dataGridView2.Rows[k].Cells[0].Value = Convert.ToString(element); // добавляем необходимое количество строчек
-                k++;
-            }
+            //foreach (var element in listI)
+            //{
+            //    table.Rows.Add(); // добавляем необходимое количество строчек
+            //}
+            //dataGridView2.DataSource = table;
+            //int k = 0; // элемент по счету
+            //foreach (var element in listI)
+            //{
+            //    dataGridView2.Rows[k].Cells[0].Value = Convert.ToString(element); // добавляем необходимое количество строчек
+            //    k++;
+            //}
 
             // textBox7.Text += (Convert.ToString(tempI)) + ';' + "\n";
         }
@@ -781,7 +816,7 @@ namespace Общая_задая
         {
             for(int  i =0; i<q; i++)
             {
-                u1[i] = u[i];
+                u1_[i] = u_[i];
             }
         }
 
