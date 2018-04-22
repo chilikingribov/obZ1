@@ -47,3 +47,22 @@ C:\Users\Mitya\source\repos\Нейронные сети программы\Zadac
 C:\Users\Mitya\source\repos\Нейронные сети программы\Zadacha\obZ1\Общая задая\obj\Debug\Общая задая.csproj.CoreCompileInputs.cache
 C:\Users\Mitya\source\repos\Нейронные сети программы\Zadacha\obZ1\Общая задая\obj\Debug\Общая задая.exe
 C:\Users\Mitya\source\repos\Нейронные сети программы\Zadacha\obZ1\Общая задая\obj\Debug\Общая задая.pdb
+C:\Users\gRiboN\Documents\Visual Studio 2015\Projects\obZ1-task1\Общая задая\bin\Debug\Общая задая.exe.config
+C:\Users\gRiboN\Documents\Visual Studio 2015\Projects\obZ1-task1\Общая задая\obj\Debug\Общая задая.exe
+C:\Users\gRiboN\Documents\Visual Studio 2015\Projects\obZ1-task1\Общая задая\obj\Debug\Общая задая.pdb
+C:\Users\gRiboN\Documents\Visual Studio 2015\Projects\obZ1-task1\Общая задая\obj\Debug\Общая задая.csprojResolveAssemblyReference.cache
+C:\Users\gRiboN\Documents\Visual Studio 2015\Projects\obZ1-task1\Общая задая\obj\Debug\Общая_задая.Form1.resources
+C:\Users\gRiboN\Documents\Visual Studio 2015\Projects\obZ1-task1\Общая задая\obj\Debug\Общая_задая.Properties.Resources.resources
+C:\Users\gRiboN\Documents\Visual Studio 2015\Projects\obZ1-task1\Общая задая\obj\Debug\Общая задая.csproj.GenerateResource.Cache
+C:\Users\gRiboN\Documents\Visual Studio 2015\Projects\obZ1-task1\Общая задая\bin\Debug\Общая задая.exe
+C:\Users\gRiboN\Documents\Visual Studio 2015\Projects\obZ1-task1\Общая задая\bin\Debug\Общая задая.pdb
+C:\Users\Mitya\Downloads\obZ1-task1 (4)\obZ1-task1\Общая задая\obj\Debug\Общая задая.csprojResolveAssemblyReference.cache
+C:\Users\Mitya\Downloads\obZ1-task1 (4)\obZ1-task1\Общая задая\obj\Debug\Общая_задая.Form1.resources
+C:\Users\Mitya\Downloads\obZ1-task1 (4)\obZ1-task1\Общая задая\obj\Debug\Общая_задая.Properties.Resources.resources
+C:\Users\Mitya\Downloads\obZ1-task1 (4)\obZ1-task1\Общая задая\obj\Debug\Общая задая.csproj.GenerateResource.cache
+C:\Users\Mitya\Downloads\obZ1-task1 (4)\obZ1-task1\Общая задая\obj\Debug\Общая задая.csproj.CoreCompileInputs.cache
+C:\Users\Mitya\Downloads\obZ1-task1 (4)\obZ1-task1\Общая задая\obj\Debug\Общая задая.exe
+C:\Users\Mitya\Downloads\obZ1-task1 (4)\obZ1-task1\Общая задая\obj\Debug\Общая задая.pdb
+C:\Users\Mitya\Downloads\obZ1-task1 (4)\obZ1-task1\Общая задая\bin\Debug\Общая задая.exe.config
+C:\Users\Mitya\Downloads\obZ1-task1 (4)\obZ1-task1\Общая задая\bin\Debug\Общая задая.exe
+C:\Users\Mitya\Downloads\obZ1-task1 (4)\obZ1-task1\Общая задая\bin\Debug\Общая задая.pdb
