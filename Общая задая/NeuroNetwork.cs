@@ -116,7 +116,7 @@ namespace Общая_задая
 
                 }
                 secondSum *= (double)m_delta * m_CoeffE2 / m_Neurons;
-                firstSum = m_WeightsCoeffR1 * m_delta * m_CurrentU[k] - secondSum;
+                firstSum = m_WeightsCoeffR1 * m_delta * m_PreviousU[k] - secondSum; // m_CurrentU[k]
                 m_CurrentU[k] = m_PreviousU[k] - m_descentCoeff * firstSum;
             }
         }
@@ -160,9 +160,9 @@ namespace Общая_задая
             for (int k = 0; k < m_q; k++)
             {
                 firstSum += m_CurrentU[k] * m_CurrentU[k];
-                firstSum = (double)firstSum / 2;
+                //firstSum = (double)firstSum / 2;
             }
-            firstSum *= m_WeightsCoeffR1 * m_delta;
+            firstSum *= m_WeightsCoeffR1 * m_delta*0.5;
             for (int i = 0; i < m_Neurons; i++)
             {
                 secondSum += Math.Pow((m_CurrentX[m_q][i] - m_EndPoints[i]), 2);
@@ -214,6 +214,7 @@ namespace Общая_задая
             m_delta = (double)m_Time / m_q;
             listOfTargetFuncValues.Clear();
             listOfBadTrgFuncValues.Clear();
+            
 
             m_PrevValOfTargetFunc = Calc_FirstVal_Of_TargetFunc();
             listOfTargetFuncValues.Add(m_PrevValOfTargetFunc);
@@ -593,7 +594,7 @@ namespace Общая_задая
         {
             m_oscillation = new List<double>(m_Neurons);
             m_EndPoints = new List<double>(m_Neurons);
-            m_CurrentU = new List<double>(m_Neurons);
+            m_CurrentU = new List<double>(m_q);
             m_PreviousU = new List<double>(m_q);
             m_CurrentX = new List<List<double>>(m_q + 1);
             m_PreviousX = new List<List<double>>(m_q + 1);
@@ -603,7 +604,6 @@ namespace Общая_задая
             m_CurrentP = new List<List<double>>(m_q + 1);
             InitArrayBySingleVal(ref m_oscillation, 0, m_Neurons);
             InitArrayBySingleVal(ref m_EndPoints, 0, m_Neurons);
-            InitArrayBySingleVal(ref m_CurrentU, 0, m_q);
             InitArrayBySingleVal(ref m_PreviousU, 0, m_q);
             InitArrayBySingleVal(ref m_CurrentX, 0, m_q + 1, m_Neurons);
             InitArrayBySingleVal(ref m_PreviousX, 0, m_q + 1, m_Neurons);
@@ -686,7 +686,7 @@ namespace Общая_задая
 
         public bool InitU(double value_)
         {
-            InitArrayBySingleVal(ref m_CurrentU, value_);
+            InitArrayBySingleVal(ref m_CurrentU, value_, m_q);
             return true;
         }
 

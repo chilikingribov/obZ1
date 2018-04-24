@@ -33,6 +33,20 @@ namespace Общая_задая
                 MessageBox.Show("Введите Wi в таблицу");
 
             Network.MainLoop();
+            DataTable table = new DataTable();
+            table.Columns.Add("I", typeof(double));
+            int k = 0; // элемент по счету
+            List<double> funcVals = Network.getListTrgVals();
+            foreach (var element in funcVals)
+            {
+                table.Rows.Add(); // добавляем необходимое количество строчек
+            }
+            dataGridView2.DataSource = table;
+            foreach (var element in funcVals)
+            {
+                dataGridView2.Rows[k].Cells[0].Value = Convert.ToString(element); // добавляем необходимое количество строчек
+                k++;
+            }
             MessageBox.Show("The end is now!");
         }
 
@@ -252,6 +266,8 @@ namespace Общая_задая
             //Network.Neurons = 2; Network.q = 10; T = 1; B = 2; M1 = 2; M2 = 3;Alfa = 0.01; E = 0.001;
 
             Network.InitializeArrays();
+
+            Network.InitU(u);
 
             Network.SetStartU(u);
 
